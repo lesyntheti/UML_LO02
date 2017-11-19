@@ -28,8 +28,8 @@ public class Carte {
 	public String toString(){
 		String sortie;
 		if (numero==10) sortie = "Valet";
-		if (numero==11) sortie = "Dame";
-		if (numero==12) sortie = "Roi";
+		else if (numero==11) sortie = "Dame";
+		else if (numero==12) sortie = "Roi";
 		else sortie = "" + (numero+1);
 		return sortie + " de " + getCouleur();
 		

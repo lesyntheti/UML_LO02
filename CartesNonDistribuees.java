@@ -1,10 +1,10 @@
 package crazyEight;
-import java.util.*;
-//import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+
 
 public class CartesNonDistribuees {
-	
-	//private static final int TAILLE_MAX = 52;
 
 	
 	
@@ -48,7 +48,7 @@ public static void main(String[] args) {
 		ArrayList<Carte> deck = new ArrayList<Carte>();
 		initialiserCarte(deck);
 		afficherDeck(deck);
-		System.out.println("\n suffle\n");
+		System.out.println("\n shuffle\n");
 		melanger(deck);
 		afficherDeck(deck);
 		
