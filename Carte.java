@@ -35,6 +35,13 @@ public class Carte {
 		
 	}
 	
+	public boolean equals(Carte carte){
+        if((carte.couleur==this.couleur)&&(carte.numero==this.numero)){
+            return true;
+        }
+        else
+        	return false;
+    }
 	
 	/*
 	public static void main(String[] args) {

@@ -3,6 +3,8 @@ package crazyEight;
 public class CartesJouees {
 	private Carte carteDessus;
 	
+	
+	
 	public CartesJouees(Carte premiereCarte){
 		this.carteDessus=premiereCarte;
 	}

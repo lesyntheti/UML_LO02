@@ -1,34 +1,40 @@
 package crazyEight;
-import java.util.Date; 
 
-public class ControleJeu {
-	private static Date tempsDeJeu;
-	//le sens du jeu est le sens horaire par defaut(sensPartie=false)
-	private boolean sensPartie=false;
-	private JoueurVirtuel joueurEnCours;
+
+public class JoueurVirtuel {
+	
+	String nom;
+	MainJoueur main;
+	
+	public JoueurVirtuel(String nom){
+		this.nom = nom;
+		MainJoueur main = new MainJoueur();
+	}
+	
+	//méthodes pour jouer une carte
+	//inclure la stratégie aussi
+	
+	public String toString(){
+		return this.nom;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public MainJoueur getMain() {
+		return main;
+	}
+
+	public void setMain(MainJoueur main) {
+		this.main = main;
+	}
 	
 	
 	
-	public boolean isSensPartie() {
-		return sensPartie;
-	}
-
-	public void setSensPartie(boolean sensPartie) {
-		this.sensPartie = sensPartie;
-	}
-
-	public JoueurVirtuel getJoueurEnCours() {
-		return joueurEnCours;
-	}
-
-	public void setJoueurEnCours(JoueurVirtuel joueurEnCours) {
-		this.joueurEnCours = joueurEnCours;
-	}
-
-	/*public static void main(String[] args) {
-		Date date = new Date();
-		tempsDeJeu=date;
-		System.out.print(tempsDeJeu);
-	}*/
 }
 
