@@ -1,3 +1,4 @@
+
 package crazyEight;
 
 
@@ -34,6 +35,31 @@ public class JoueurVirtuel {
 		this.main = main;
 	}
 	
+	public void jouerUneCarte(Carte dessusPile,MainDuJoueur main) {
+		
+		Iterator<Carte> i=main.main.iterator();
+		Carte carteEnCours = (Carte) i;
+		boolean peutJoue = false;
+		if(carteEnCours.pouvoirJoue(dessusPile)==true) {
+			peutJoue=true;
+		} 
+		while((peutJoue==false)&(i.hasNext())){
+			carteEnCours=i.next();
+			if(carteEnCours.pouvoirJoue(dessusPile)==true) {
+				peutJoue=true;
+			}
+		}
+		//On utilise les cartes a effect, si on ne peut rien jouer.
+		//Pas encore fini...
+		if(peutJoue==false) {
+			Carte carteEnCours2 = (Carte) i;
+			
+		}
+		if (peutJoue==true) {
+			main.main.remove(carteEnCours);
+			
+		}
+	}
 	
 	
 }
