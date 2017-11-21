@@ -60,7 +60,10 @@ public class JoueurVirtuel {
 			
 		}
 	}
-	
-	
+	public void changerNom() {
+		System.out.println("Saisir un nom vous voulez donner.");
+		Scanner sc = new Scanner(System.in);
+		this.nom=sc.next();
+	}
 }
 
