@@ -42,6 +42,15 @@ public class Carte {
         else
         	return false;
     }
+	//pour verifier si la carte est jouable ou pas. Changement par rapport au diagramme de classe!!!
+	public boolean pouvoirJoue(Carte dessusPile) {
+		
+		boolean peutJoue=false;
+		if((this.numero==dessusPile.numero)||(this.couleur==dessusPile.couleur)){
+			peutJoue=true;
+		}
+		return peutJoue;
+	}
 	
 	/*
 	public static void main(String[] args) {
