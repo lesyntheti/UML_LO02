@@ -1,12 +1,13 @@
-package crazyEight;
+package crazyeightBis;
 
 public class Carte {
 
-	private int numero, couleur;
+private int numero, couleur;
 	
 	public Carte(int numero, int couleur){
 		this.numero=numero;
 		this.couleur=couleur;
+		//System.out.println("carte créée");
 	}
 	
 	
@@ -51,12 +52,5 @@ public class Carte {
 		}
 		return peutJoue;
 	}
-	
-	/*
-	public static void main(String[] args) {
-		Carte roiDeTrefle = new Carte(12,4);
-		System.out.println(roiDeTrefle.toString());
-	}
-	*/
 	
 }

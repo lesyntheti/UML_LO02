@@ -1,13 +1,16 @@
-package crazyEight;
-
+package crazyeightBis;
 import java.util.Date;
 
 public class ControleJeu {
+
 	
 	private static Date tempsDeJeu;
 	//le sens du jeu est le sens horaire par defaut(sensPartie=false)
 	private boolean sensPartie=false;
-	private JoueurVirtuel joueurEnCours;
+	private Joueur joueurEnCours;
+	
+	
+	
 	
 	
 	
@@ -19,11 +22,11 @@ public class ControleJeu {
 		this.sensPartie = sensPartie;
 	}
 
-	public JoueurVirtuel getJoueurEnCours() {
+	public Joueur getJoueurEnCours() {
 		return joueurEnCours;
 	}
 
-	public void setJoueurEnCours(JoueurVirtuel joueurEnCours) {
+	public void setJoueurEnCours(Joueur joueurEnCours) {
 		this.joueurEnCours = joueurEnCours;
 	}
 
@@ -32,6 +35,6 @@ public class ControleJeu {
 		tempsDeJeu=date;
 		System.out.print(tempsDeJeu);
 	}*/
-	
+
 	
 }

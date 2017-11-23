@@ -1,95 +1,83 @@
-package crazyEight;
+package crazyeightBis;
 
-import java.util.*;
+import java.util.ArrayList;
+
 
 public class Jeu {
 
-	
 	private Initialisation initialisation;
-	private CartesNonDistribuees cartesNonDistribuees;
-	private CartesJouees cartesJouees;
+	private Pioche pioche;
+	private Talon talon;
 	private int nbJoueurs;
-	protected ArrayList<JoueurVirtuel> listeJoueurs = new ArrayList<JoueurVirtuel>();
+	protected ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
 	
 	
 	
-	public boolean tourDeJeu(){
-		
-	}
-
-	
-	
-	
-//getters et setters
-
-	public Initialisation getInitialisation() {
-		return initialisation;
-	}
-
-
-
-	public void setInitialisation(Initialisation initialisation) {
-		this.initialisation = initialisation;
-	}
-
-
-
-	public CartesNonDistribuees getCartesNonDistribuees() {
-		return cartesNonDistribuees;
-	}
-
-
-
-	public void setCartesNonDistribuees(CartesNonDistribuees cartesNonDistribuees) {
-		this.cartesNonDistribuees = cartesNonDistribuees;
-	}
-
-
-
-	public CartesJouees getCartesJouees() {
-		return cartesJouees;
-	}
-
-
-
-	public void setCartesJouees(CartesJouees cartesJouees) {
-		this.cartesJouees = cartesJouees;
-	}
-
-
-
-	public int getNbJoueurs() {
-		return nbJoueurs;
-	}
-
-
-
-	public void setNbJoueurs(int nbJoueurs) {
+	//doit avoir créé une initialisation d'abord !
+	//constructeur du jeu avec les paramètres de initialisation
+	public Jeu(Pioche pioche, Talon talon, int nbJoueurs, ArrayList<Joueur> listeJoueurs) {
+		this.pioche = pioche;
+		this.talon = talon;
 		this.nbJoueurs = nbJoueurs;
-	}
-
-
-
-	public ArrayList<JoueurVirtuel> getListeJoueurs() {
-		return listeJoueurs;
-	}
-
-
-
-	public void setListeJoueurs(ArrayList<JoueurVirtuel> listeJoueurs) {
 		this.listeJoueurs = listeJoueurs;
 	}
 
 
 
+
+
+
+
+
 	
-		
+	
+	
+	
+	
+	
+	
+	//getters and setters
+	
+	public Initialisation getInitialisation() {
+		return initialisation;
+	}
+	public void setInitialisation(Initialisation initialisation) {
+		this.initialisation = initialisation;
+	}
+
+	public Pioche getPioche() {
+		return pioche;
+	}
+
+	public void setPioche(Pioche pioche) {
+		this.pioche = pioche;
+	}
+
+	public Talon getTalon() {
+		return talon;
+	}
+
+	public void setTalon(Talon talon) {
+		this.talon = talon;
+	}
+
+	public int getNbJoueurs() {
+		return nbJoueurs;
+	}
+	public void setNbJoueurs(int nbJoueurs) {
+		this.nbJoueurs = nbJoueurs;
+	}
+	public ArrayList<Joueur> getListeJoueurs() {
+		return listeJoueurs;
+	}
+	public void setListeJoueurs(ArrayList<Joueur> listeJoueurs) {
+		this.listeJoueurs = listeJoueurs;
+	}
 	
 	
 	
 
-		
-		
 	
-
+	
+	
 }

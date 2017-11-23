@@ -1,26 +1,30 @@
-package crazyEight;
+package crazyeightBis;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.*;
 
 
-public class CartesNonDistribuees {
+public class Pioche {
 
-	protected ArrayList<Carte> deck;
+	private ArrayList<Carte> deck;
 	
-	public CartesNonDistribuees(){
+	public Pioche(){
 		
-		this.deck=initialiserCarte(deck);
+		ArrayList<Carte> deck = new ArrayList<Carte>();
+		deck=initialiserCarte(deck);
+		melanger(deck);
+		this.setDeck(deck);
 		//afficherDeck(deck);
 		//System.out.println("\n shuffle\n");
-		melanger(deck);
+		
 		//afficherDeck(deck);
 	}
 	
 	
-	public  ArrayList<Carte> initialiserCarte(ArrayList<Carte> deck){
+	public ArrayList<Carte> initialiserCarte(ArrayList<Carte> deck){
 		
-		//méthode pour retourner les 52 cartes dans une collection Array (besoin d'être ordonné pour le shuffle)
+		
 		for (int i=0; i<12; i++){
 			for (int j=0; j<4; j++){
 				//carte(i).numero=i, carte(i).couleur=j
@@ -49,7 +53,8 @@ public class CartesNonDistribuees {
 	
 	public Carte tirerCarte(){
 		
-		Carte carteTiree =deck.get((int)Math.random()*51);
+		
+		Carte carteTiree =this.deck.get((int)Math.random()*51);
 		deck.remove(carteTiree);
 		return carteTiree;
 	}
@@ -68,5 +73,6 @@ public class CartesNonDistribuees {
 
 	
 	
+
 	
 }
