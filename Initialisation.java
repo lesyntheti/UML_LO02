@@ -18,23 +18,37 @@ public class Initialisation {
 		System.out.println("objet initialisation créé");
 	}
 	
-	public void initialiser(int nbJoueurs){
+	public void initialiser(){
 		//this.nbJoueurs=nbJoueurs;
+		
 		this.pioche = new Pioche();
-		System.out.println("pioche créée");
+		//System.out.println("pioche créée");
+		
 		this.talon = new Talon(this.pioche.tirerCarte());
-		System.out.println("talon créé \n première carte : "+this.talon.getCarteDessus());
+		//System.out.println("talon créé \n première carte : "+this.talon.getCarteDessus());
+		
 		this.listeJoueurs= this.ajouterJoueurs(); //ajoute les joueurs avec leurs mains remplies
-		System.out.println("il y a "+listeJoueurs.size()+"joueur adverse, avec"+listeJoueurs.get(0).getMain().size()+"cartes");
+		//System.out.println("il y a "+listeJoueurs.size()+"joueur adverse, avec"+listeJoueurs.get(0).getMain().size()+"cartes");
 	}
 	
 	
 	public ArrayList<Joueur> ajouterJoueurs(){
 		ArrayList<Joueur> listeTempJoueurs = new ArrayList<Joueur>();
-		System.out.println("nombre de joueurs adverses ? ");
-		nbJoueurs = sc.nextInt();
+		nbJoueurs=0;
+		
+		while(nbJoueurs<1 || nbJoueurs>4){
+			System.out.println("nombre de joueurs adverses ? ");
+			nbJoueurs = sc.nextInt();
+			if (nbJoueurs<1 || nbJoueurs>4)
+				System.out.println("nombre doit etre entre 1 et 4 please");
+		
+		}
+		
 		this.setNbJoueurs(nbJoueurs);
+		
 		String nom;
+		
+		
 		for (int i=0; i<nbJoueurs; i++){
 			System.out.println("nom du joueur ?\n");
 			nom = sc.nextLine();
@@ -46,6 +60,15 @@ public class Initialisation {
 			//on récupère le nom du joueur et l'envoi à la création du joueur virtuel
 			listeTempJoueurs.add(joueur);
 		}
+		
+		//on fini par se créer soit 
+		nom ="moi";
+		Joueur joueur = new Joueur(nom);
+		ArrayList<Carte> mainTemp = new ArrayList<Carte>();
+		mainTemp=this.distribuerCartes(nbJoueurs); //distribue X cartes selon le nombre d'adversaires
+		joueur.setMain(mainTemp);
+		nbJoueurs++;  //on doit se rajouter dans le compte du nombre de joueurs
+		
 		return listeTempJoueurs;		//retourne la liste des joueurs ajoutés dans l'attribut listeJoueurs de l'objet initialisation
 	}
 	
