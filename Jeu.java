@@ -10,11 +10,13 @@ public class Jeu {
 	private Talon talon;
 	private int nbJoueurs;
 	protected ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
+	private boolean gagnant=false; //à envoyer vers le main (partie)
+	private Joueur joueurEnCours;   //pour savoir qui faire jouer à chaque étape d'un tour
 	
 	
 	
-	//doit avoir cr�� une initialisation d'abord !
-	//constructeur du jeu avec les param�tres de initialisation
+	//doit avoir créé une initialisation d'abord !
+	//constructeur du jeu avec les paramètres de initialisation
 	public Jeu(Pioche pioche, Talon talon, int nbJoueurs, ArrayList<Joueur> listeJoueurs) {
 		this.pioche = pioche;
 		this.talon = talon;
@@ -23,7 +25,14 @@ public class Jeu {
 	}
 
 
-
+//méthode de tour de jeu  (à appeler une fois que tous les éléments ont étés initialisés avec l'objet initialisation)
+	public void tourDeJeu(){
+		
+			
+			
+			
+		
+	}
 
 
 
