@@ -51,8 +51,13 @@ public class Talon {
 	}
 
 
-	public void setCarteDessus(Carte carteDessus) {
-		this.carteDessus = carteDessus;
+	public void setCarteDessus(Carte carteJouee) {
+		if (carteDessus==null)
+			this.carteDessus=carteJouee;
+		else{
+			this.dessousPile.add(this.carteDessus);
+			this.carteDessus=carteJouee;
+		}
 	}
 	
 	
