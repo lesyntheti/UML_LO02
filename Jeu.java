@@ -25,6 +25,7 @@ public class Jeu {
 		this.listeJoueurs = listeJoueurs;
 		this.controleJeu = new ControleJeu();
 		posJoueurEnCours=this.listeJoueurs.size()-1; //si on veut commencer en premier à jouer
+		System.out.println("\nla premiere carte du talon est : " +this.talon.getCarteDessus());
 	}
 
 
