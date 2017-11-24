@@ -15,39 +15,74 @@ public class Joueur {
 		this.main = new ArrayList<Carte>();
 		//on créé un joueur avec une main vide
 	}
-
-	
-	
- 	
-	public void jouerUneCarte(Carte dessusPile,ArrayList<Carte> main) {
+	public void jouerUneCarte(Carte dessusPile,ArrayList<Carte> main, Talon talon,Pioche pioche) {
 		
 		this.main=main;
+
 		Iterator<Carte> i=main.iterator();
+
 		Carte carteEnCours = (Carte) i;
+
 		boolean peutJoue = false;
+
 		if(carteEnCours.pouvoirJoue(dessusPile)==true) {
+
 			peutJoue=true;
+
 		} 
-		while((peutJoue==false)&(i.hasNext())){
+
+		while((peutJoue==false)&&(i.hasNext())){
+
 			carteEnCours=i.next();
+
 			if(carteEnCours.pouvoirJoue(dessusPile)==true) {
+
 				peutJoue=true;
+
 			}
+
 		}
-		//On utilise les cartes a effect, si on ne peut rien jouer.
-		//Pas encore fini...
+
+		//On utilise la cartes 8, si on ne peut rien jouer.
+		
 		if(peutJoue==false) {
-			Carte carteEnCours2 = (Carte) i;
-			
+			int j=0;
+			while((j<=main.size())&&peutJoue==false) {
+				Carte carteEnCours2 = main.get(j);
+				if(carteEnCours2.getNumero()==8) {
+					peutJoue=true;
+				}
+			}		
 		}
 		if (peutJoue==true) {
-			main.remove(carteEnCours);
+
+			main.remove(carteEnCours);	
+			talon.setCarteDessus(carteEnCours);
 			
+
 		}
+		//Si on ne peut rien jouer, ajouter une autre carte.
+		if (peutJoue==false) {
+			main.add(piocher(pioche));
+		}
+
 	}
 	
-	
-	
+  
+  //piocher une carte
+	public Carte piocher(Pioche pioche) {
+
+		return 	pioche.tirerCarte();
+	}
+
+ 
+  //s'il reste qu'une seule carte
+	public void annoncerCarte() {
+		if (this.nbCarteMain==1) {
+			System.out.println("");
+		}
+		
+	}
 	
 	
 	public ArrayList<Carte> cartesJouables(Carte carteTalon){
@@ -128,6 +163,14 @@ public class Joueur {
 	}
 	
 	
+
+  	public void finirTour() {
+		if (this.nbCarteMain==0) {
+			System.out.println(this.nom + " gagnent!");
+		}
+		
+	}
+  
 	public void changerNom() {
 				System.out.println("Saisir un nom vous voulez donner.");
 				Scanner sc = new Scanner(System.in);
