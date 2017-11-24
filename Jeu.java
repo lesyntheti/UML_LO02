@@ -30,9 +30,12 @@ public class Jeu {
 //méthode de tour de jeu  (à appeler une fois que tous les éléments ont étés initialisés avec l'objet initialisation)
 	public boolean tourDeJeu(Joueur joueurEnCours){
 		
-		this.joueurEnCours = joueurEnCours; //dans le main il faudra envoyer controleJeu.joueurEnCours dans cette méthode
-		ArrayList<Carte> carteJouable=this.joueurEnCours.cartesJouables(this.talon.getCarteDessus());
+		posJoueurEnCours=this.listeJoueurs.size();
+		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours-1); //dans le main il faudra envoyer controleJeu.joueurEnCours dans cette méthode
+		ArrayList<Carte> carteJouable= new ArrayList<Carte>();
+		carteJouable = this.joueurEnCours.cartesJouables(this.talon.getCarteDessus());
 		int nbCartesJouables = carteJouable.size();
+		ArrayList<Carte> mainSuppr = new ArrayList<Carte>();
 		
 		if(nbCartesJouables==0){
 			this.joueurEnCours.piocherCarte(1, this.pioche);
@@ -43,22 +46,29 @@ public class Jeu {
 		{	
 			Carte carteJouee;
 			carteJouee=this.joueurEnCours.jouerCarte(carteJouable, this.talon.getCarteDessus());
-			this.talon.setCarteDessus(carteJouee); //on joue la carte
+			this.talon.ajouterAPile(carteJouee); //on joue la carte
 			
-			ArrayList<Carte> mainSuppr = new ArrayList<Carte>();
+			
 			mainSuppr = this.joueurEnCours.getMain();
 			mainSuppr.remove(carteJouee);
 			this.joueurEnCours.setMain(mainSuppr); //on supprime la carte jouée de la main du joueur
 			
-			//on vérifie si le joueur a encore des cartes
+			//on vérifie si le joueur a encore des cartes (si oui, on continue, si non, il a gagné !)
 			if (this.joueurEnCours.getMain().isEmpty()){
-				System.out.println("le joueur " + this.joueurEnCours.getNom() +" n'a plus de cartes");
+				System.out.println("vous n'avez plus de cartes, bravo !");
 				return true;
 			}
 			else{
 				int nbCartesReste;
 				System.out.println("Il reste au joueur " + this.joueurEnCours.getNom() +"" + this.joueurEnCours.getMain().size() +" cartes.");
 				prochainJoueur();
+				
+			
+				mainSuppr = this.joueurEnCours.getMain();
+				mainSuppr.remove(carteJouee);
+				this.joueurEnCours.setMain(mainSuppr);
+				
+				return false;
 			}
 		
 		}
@@ -67,6 +77,33 @@ public class Jeu {
 			
 			//développer la méthode pour que le robot joue
 			
+		//if stratégie = 0
+			//méthode simple : toujours jouer la 1e carte jouable (aucune stratégie)
+			Carte carteJouee;
+			carteJouee=carteJouable.get(1);
+			this.talon.ajouterAPile(carteJouee); //on joue la carte
+			
+			mainSuppr = this.joueurEnCours.getMain();
+			mainSuppr.remove(carteJouee);
+			this.joueurEnCours.setMain(mainSuppr);
+			
+			
+			if (this.joueurEnCours.getMain().isEmpty()){
+				System.out.println("le joueur " + this.joueurEnCours.getNom() +" n'a plus de cartes");
+				return true;
+			}
+			else{
+				int nbCartesReste;
+				System.out.println("Il reste au joueur " + this.joueurEnCours.getNom() +"" + this.joueurEnCours.getMain().size() +" cartes.");
+				prochainJoueur();
+				
+			
+				mainSuppr = this.joueurEnCours.getMain();
+				mainSuppr.remove(carteJouee);
+				this.joueurEnCours.setMain(mainSuppr);
+				
+				return false;
+			}
 			
 		}
 		
@@ -168,6 +205,46 @@ public class Jeu {
 	}
 	public void setListeJoueurs(ArrayList<Joueur> listeJoueurs) {
 		this.listeJoueurs = listeJoueurs;
+	}
+
+
+	public boolean isGagnant() {
+		return gagnant;
+	}
+
+
+	public void setGagnant(boolean gagnant) {
+		this.gagnant = gagnant;
+	}
+
+
+	public Joueur getJoueurEnCours() {
+		return joueurEnCours;
+	}
+
+
+	public void setJoueurEnCours(Joueur joueurEnCours) {
+		this.joueurEnCours = joueurEnCours;
+	}
+
+
+	public ControleJeu getControleJeu() {
+		return controleJeu;
+	}
+
+
+	public void setControleJeu(ControleJeu controleJeu) {
+		this.controleJeu = controleJeu;
+	}
+
+
+	public int getPosJoueurEnCours() {
+		return posJoueurEnCours;
+	}
+
+
+	public void setPosJoueurEnCours(int posJoueurEnCours) {
+		this.posJoueurEnCours = posJoueurEnCours;
 	}
 	
 	

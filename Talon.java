@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Talon {
 
 	private Carte carteDessus;
-	private ArrayList<Carte> dessousPile;
-	
+	private ArrayList<Carte> dessousPile = new ArrayList<Carte>();
+	private ArrayList<Carte> pileT;
 	
 	
 	
@@ -51,11 +51,26 @@ public class Talon {
 	}
 
 
+	public void ajouterAPile(Carte carteJouee){
+		if (this.dessousPile.isEmpty()){
+			pileT = new ArrayList<Carte>();
+			pileT.add(carteJouee);
+			this.setDessousPile(pileT);
+		}
+		else{	
+			pileT = new ArrayList<Carte>();
+			pileT=this.getDessousPile();
+			pileT.add(carteJouee);
+			this.setDessousPile(pileT);
+		}
+			
+		
+	}
+	
 	public void setCarteDessus(Carte carteJouee) {
 		if (carteDessus==null)
 			this.carteDessus=carteJouee;
 		else{
-			this.dessousPile.add(this.carteDessus);
 			this.carteDessus=carteJouee;
 		}
 	}

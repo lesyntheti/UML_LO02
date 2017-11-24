@@ -14,6 +14,7 @@ public class Initialisation {
 	private Talon talon;
 	private ArrayList<Joueur> listeJoueurs;
 	
+	
 	public Initialisation(){
 		System.out.println("objet initialisation créé");
 	}
@@ -67,6 +68,7 @@ public class Initialisation {
 		ArrayList<Carte> mainTemp = new ArrayList<Carte>();
 		mainTemp=this.distribuerCartes(nbJoueurs); //distribue X cartes selon le nombre d'adversaires
 		joueur.setMain(mainTemp);
+		listeTempJoueurs.add(joueur);
 		nbJoueurs++;  //on doit se rajouter dans le compte du nombre de joueurs
 		
 		return listeTempJoueurs;		//retourne la liste des joueurs ajoutés dans l'attribut listeJoueurs de l'objet initialisation

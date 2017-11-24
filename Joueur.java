@@ -48,6 +48,8 @@ public class Joueur {
 	
 	
 	
+	
+	
 	public ArrayList<Carte> cartesJouables(Carte carteTalon){
 		//(rappel : this est un Joueur)
 		ArrayList<Carte> mainJoueurJouableTemp= new ArrayList<Carte>();

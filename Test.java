@@ -15,6 +15,11 @@ public class Test {
 		System.out.println("test nbJoueurs = " +jeu.getNbJoueurs());
 		
 		
+		while (!jeu.isGagnant()){
+			jeu.tourDeJeu(jeu.getJoueurEnCours());
+		}
+		
+		
 		/*
 		 * il faudra penser, une fois la partie commencée, à faire autant de tour de jeu que nécessaire jusqu'à ce qu'un gagnant ressorte
 		 * , dans quel cas la partie se terminera.
