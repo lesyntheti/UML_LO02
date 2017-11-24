@@ -71,6 +71,7 @@ public class Talon {
 		if (carteDessus==null)
 			this.carteDessus=carteJouee;
 		else{
+			this.dessousPile.add(this.carteDessus);
 			this.carteDessus=carteJouee;
 		}
 	}

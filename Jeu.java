@@ -24,14 +24,15 @@ public class Jeu {
 		this.nbJoueurs = nbJoueurs;
 		this.listeJoueurs = listeJoueurs;
 		this.controleJeu = new ControleJeu();
+		posJoueurEnCours=this.listeJoueurs.size()-1; //si on veut commencer en premier à jouer
 	}
 
 
 //méthode de tour de jeu  (à appeler une fois que tous les éléments ont étés initialisés avec l'objet initialisation)
 	public boolean tourDeJeu(Joueur joueurEnCours){
 		
-		posJoueurEnCours=this.listeJoueurs.size();
-		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours-1); //dans le main il faudra envoyer controleJeu.joueurEnCours dans cette méthode
+		
+		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours); //dans le main il faudra envoyer controleJeu.joueurEnCours dans cette méthode
 		ArrayList<Carte> carteJouable= new ArrayList<Carte>();
 		carteJouable = this.joueurEnCours.cartesJouables(this.talon.getCarteDessus());
 		int nbCartesJouables = carteJouable.size();
@@ -46,7 +47,7 @@ public class Jeu {
 		{	
 			Carte carteJouee;
 			carteJouee=this.joueurEnCours.jouerCarte(carteJouable, this.talon.getCarteDessus());
-			this.talon.ajouterAPile(carteJouee); //on joue la carte
+			this.talon.setCarteDessus(carteJouee); //on joue la carte
 			
 			
 			mainSuppr = this.joueurEnCours.getMain();
@@ -56,32 +57,33 @@ public class Jeu {
 			//on vérifie si le joueur a encore des cartes (si oui, on continue, si non, il a gagné !)
 			if (this.joueurEnCours.getMain().isEmpty()){
 				System.out.println("vous n'avez plus de cartes, bravo !");
+				this.setGagnant(true);
 				return true;
 			}
 			else{
 				int nbCartesReste;
-				System.out.println("Il reste au joueur " + this.joueurEnCours.getNom() +"" + this.joueurEnCours.getMain().size() +" cartes.");
-				prochainJoueur();
+				System.out.println("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.\n");
 				
-			
+				
+			/*
 				mainSuppr = this.joueurEnCours.getMain();
 				mainSuppr.remove(carteJouee);
 				this.joueurEnCours.setMain(mainSuppr);
+				*/
 				
-				return false;
 			}
 		
 		}
 		
 		else{		//si le joueur est un robot
 			
-			//développer la méthode pour que le robot joue
-			
 		//if stratégie = 0
 			//méthode simple : toujours jouer la 1e carte jouable (aucune stratégie)
 			Carte carteJouee;
-			carteJouee=carteJouable.get(1);
-			this.talon.ajouterAPile(carteJouee); //on joue la carte
+			carteJouee=carteJouable.get(0);
+			this.talon.setCarteDessus(carteJouee); //on joue la carte
+			
+			System.out.println("\n"+ this.joueurEnCours.getNom() +" joue le " +carteJouee);
 			
 			mainSuppr = this.joueurEnCours.getMain();
 			mainSuppr.remove(carteJouee);
@@ -89,26 +91,28 @@ public class Jeu {
 			
 			
 			if (this.joueurEnCours.getMain().isEmpty()){
-				System.out.println("le joueur " + this.joueurEnCours.getNom() +" n'a plus de cartes");
+				System.out.println(this.joueurEnCours.getNom() +" n'a plus de cartes");
+				this.setGagnant(true);
 				return true;
 			}
 			else{
 				int nbCartesReste;
-				System.out.println("Il reste au joueur " + this.joueurEnCours.getNom() +"" + this.joueurEnCours.getMain().size() +" cartes.");
-				prochainJoueur();
+				System.out.println("Il reste "  +" " + this.joueurEnCours.getMain().size() +" cartes à "+ this.joueurEnCours.getNom());
 				
-			
+				
+			/*
 				mainSuppr = this.joueurEnCours.getMain();
 				mainSuppr.remove(carteJouee);
 				this.joueurEnCours.setMain(mainSuppr);
+			*/
 				
-				return false;
 			}
 			
 		}
 		
+		System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
 		
-		
+		this.prochainJoueur();
 		
 		this.verifPiocheVide();  //fin du tour : on vérifie que la pioche est pas vide/trop petite pour le prochain tour
 		
@@ -139,7 +143,7 @@ public class Jeu {
 	
 	public void prochainJoueur(){
 		int posJoueurEnCours;
-		posJoueurEnCours=this.listeJoueurs.indexOf(joueurEnCours);
+		posJoueurEnCours=this.listeJoueurs.indexOf(joueurEnCours);  //inutile ?
 		
 		if(controleJeu.isSensPartie()) { //si la partie va dans le sens "normal"
 
@@ -147,7 +151,7 @@ public class Jeu {
 			
 			
 			posJoueurEnCours=this.listeJoueurs.indexOf(joueurEnCours); //on récupère l'index du joueur précédent
-			posJoueurEnCours = (posJoueurEnCours +1)%this.listeJoueurs.size(); //on l'incrémente dans la limite du nombre de joueurs 
+			this.posJoueurEnCours = (posJoueurEnCours +1)%this.listeJoueurs.size(); //on l'incrémente dans la limite du nombre de joueurs 
 			this.joueurEnCours=this.listeJoueurs.get(posJoueurEnCours); //on désigne le nouveau joueurEnCours
 
 		}
@@ -155,12 +159,12 @@ public class Jeu {
 		else{
 
 			if(posJoueurEnCours==0){
-				posJoueurEnCours = (this.listeJoueurs.size()-1);
+				this.posJoueurEnCours = (this.listeJoueurs.size()-1);
 				this.joueurEnCours=this.listeJoueurs.get(posJoueurEnCours);
 				
 			}
 			else{
-				posJoueurEnCours--;
+				this.posJoueurEnCours--;
 				this.joueurEnCours=this.listeJoueurs.get(posJoueurEnCours);
 			}
 		}

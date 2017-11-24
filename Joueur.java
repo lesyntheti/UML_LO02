@@ -122,7 +122,7 @@ public class Joueur {
         } while (numCarteChoisie < 0 || numCarteChoisie > (cartesJouables.size()-1));
 		
 		 carteChoisie=cartesJouables.get(numCarteChoisie);
-		 System.out.println("vous avez choisi le/la "+carteChoisie);
+		 System.out.println("vous avez choisi le "+carteChoisie);
 		
 		return carteChoisie;
 	}

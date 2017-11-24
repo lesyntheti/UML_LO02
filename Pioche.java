@@ -54,8 +54,6 @@ public class Pioche {
 
 	
 	public Carte tirerCarte(){
-		
-		
 		Carte carteTiree =this.deck.get((int)Math.random()*this.deck.size());
 		deck.remove(carteTiree);
 		return carteTiree;

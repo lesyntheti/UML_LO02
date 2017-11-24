@@ -6,7 +6,7 @@ public class ControleJeu {
 	
 	private static Date tempsDeJeu;
 	//le sens du jeu est le sens horaire par defaut(sensPartie=false)
-	private boolean sensPartie=false;
+	private boolean sensPartie=true;
 	private Joueur joueurEnCours;
 	
 	

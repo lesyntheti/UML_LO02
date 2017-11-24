@@ -19,6 +19,7 @@ public class Test {
 			jeu.tourDeJeu(jeu.getJoueurEnCours());
 		}
 		
+		System.out.println("\n -Partie terminée-\n\nLe vainqueur est " + jeu.getJoueurEnCours().getNom());
 		
 		/*
 		 * il faudra penser, une fois la partie commencée, à faire autant de tour de jeu que nécessaire jusqu'à ce qu'un gagnant ressorte
