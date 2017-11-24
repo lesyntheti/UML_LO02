@@ -14,6 +14,8 @@ public class Pioche {
 		ArrayList<Carte> deck = new ArrayList<Carte>();
 		deck=initialiserCarte(deck);
 		melanger(deck);
+		melanger(deck);
+		melanger(deck);
 		this.setDeck(deck);
 		//afficherDeck(deck);
 		//System.out.println("\n shuffle\n");
@@ -54,7 +56,7 @@ public class Pioche {
 	public Carte tirerCarte(){
 		
 		
-		Carte carteTiree =this.deck.get((int)Math.random()*51);
+		Carte carteTiree =this.deck.get((int)Math.random()*this.deck.size());
 		deck.remove(carteTiree);
 		return carteTiree;
 	}

@@ -10,7 +10,9 @@ public class ControleJeu {
 	private Joueur joueurEnCours;
 	
 	
-	
+	public ControleJeu(){
+		this.sensPartie=false;
+	}
 	
 	
 	
