@@ -1,2 +1,2 @@
-# UML_LO02
-Modelisation UML du projet de LO02 A17 par Guillaume BAYLE et Yining Huang
+t# projet_LO02
+Code source du projet en Java de LO02 par Guillaume et Yining :)
