@@ -13,6 +13,8 @@ public class Talon {
 	//constructor
 	public Talon(Carte premiereCarte){
 		this.carteDessus=premiereCarte;
+		this.dessousPile.add(premiereCarte);
+		
 	}
 	
 	
@@ -50,7 +52,7 @@ public class Talon {
 		this.dessousPile = dessousPile;
 	}
 
-
+//méthode inutile normalement
 	public void ajouterAPile(Carte carteJouee){
 		if (this.dessousPile.isEmpty()){
 			pileT = new ArrayList<Carte>();
@@ -67,12 +69,16 @@ public class Talon {
 		
 	}
 	
+	
 	public void setCarteDessus(Carte carteJouee) {
-		if (carteDessus==null)
+		if (carteDessus==null){
 			this.carteDessus=carteJouee;
+			this.dessousPile.add(carteJouee);  	//la carte est placée sur le dessus ET dans la pileDessous
+		}									//ainsi on pourra modifier la couleur de la carte du dessus sans conséquence sur les cartes
 		else{
-			this.dessousPile.add(this.carteDessus);
+			
 			this.carteDessus=carteJouee;
+			this.dessousPile.add(this.carteDessus); //on place la nouvelle carte sur le dessus ET dans la pile
 		}
 	}
 	

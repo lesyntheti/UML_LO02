@@ -11,7 +11,7 @@ public class ControleJeu {
 	
 	
 	public ControleJeu(){
-		this.sensPartie=false;
+		this.sensPartie=true; 
 	}
 	
 	

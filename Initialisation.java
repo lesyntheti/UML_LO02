@@ -25,12 +25,18 @@ public class Initialisation {
 		this.pioche = new Pioche();
 		//System.out.println("pioche créée");
 		
+		Variante variante = new Variante(); //demande variante voulue, et afffectation des cartes
+		this.pioche=variante.nouvelleVariante(this.pioche);
+		
 		this.talon = new Talon(this.pioche.tirerCarte());
 		//System.out.println("talon créé \n première carte : "+this.talon.getCarteDessus());
 		
 		this.listeJoueurs= this.ajouterJoueurs(); //ajoute les joueurs avec leurs mains remplies
 		//System.out.println("il y a "+listeJoueurs.size()+"joueur adverse, avec"+listeJoueurs.get(0).getMain().size()+"cartes");
 	}
+	
+	
+	
 	
 	
 	public ArrayList<Joueur> ajouterJoueurs(){
@@ -42,14 +48,13 @@ public class Initialisation {
 			nbJoueurs = sc.nextInt();
 			if (nbJoueurs<1 || nbJoueurs>4)
 				System.out.println("nombre doit etre entre 1 et 4 please");
-		
 		}
 		
 		this.setNbJoueurs(nbJoueurs);
 		
-		String nom;
+		String nom, nomX;
 		
-		
+		//problèmes avec les noms des joueurs, sc.nextLine prend les Enter pour les noms suivants...
 		for (int i=0; i<nbJoueurs; i++){
 			System.out.println("nom du joueur ? (appuyer deux fois sur Enter si >1)\n");
 			nom = sc.nextLine();
@@ -73,6 +78,8 @@ public class Initialisation {
 		
 		return listeTempJoueurs;		//retourne la liste des joueurs ajoutés dans l'attribut listeJoueurs de l'objet initialisation
 	}
+	
+	
 	
 	
 	

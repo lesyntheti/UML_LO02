@@ -2,7 +2,7 @@ package crazyeightBis;
 
 public class Carte {
 
-private int numero, couleur;
+private int numero, couleur, effet;
 	
 	public Carte(int numero, int couleur){
 		this.numero=numero;
@@ -24,6 +24,29 @@ private int numero, couleur;
 		else return "Trèfle";
 		
 	}
+	
+	
+
+	
+	
+	
+	public void setCouleur(int couleur) {
+		this.couleur = couleur;
+	}
+
+
+	public int getEffet() {
+		return effet;
+	}
+
+
+	public void setEffet(int effet) {
+		this.effet = effet;
+	}
+
+
+	
+
 
 	//toString : retourne le numero et couleur de la carte (ex : 8 de Coeur)
 	public String toString(){
@@ -47,7 +70,7 @@ private int numero, couleur;
 	public boolean pouvoirJoue(Carte dessusPile) {
 		
 		boolean peutJoue=false;
-		if((this.numero==dessusPile.numero)||(this.couleur==dessusPile.couleur)){
+		if((this.numero==dessusPile.numero)||(this.couleur==dessusPile.couleur) || this.effet==5){  //3e condition : si la carte est un 8 (ou autre carte d'effet similaire selon variante)
 			peutJoue=true;
 		}
 		return peutJoue;

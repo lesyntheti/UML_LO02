@@ -1,6 +1,7 @@
 package crazyeightBis;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Jeu {
@@ -15,6 +16,7 @@ public class Jeu {
 	private ControleJeu controleJeu;
 	private int posJoueurEnCours;
 	
+	Scanner sc = new Scanner(System.in);
 	
 	//doit avoir créé une initialisation d'abord !
 	//constructeur du jeu avec les paramètres de initialisation
@@ -39,17 +41,18 @@ public class Jeu {
 		int nbCartesJouables = carteJouable.size();
 		ArrayList<Carte> mainSuppr = new ArrayList<Carte>();
 		
+		
 		if(nbCartesJouables==0){
 			this.joueurEnCours.piocherCarte(1, this.pioche);
 			System.out.println("\n"+this.joueurEnCours.getNom() +" pioche 1 carte");
 		}
+		
 		
 		else if (this.joueurEnCours.getNom()=="moi")  //si c'est à nous de jouer 
 		{	
 			Carte carteJouee;
 			carteJouee=this.joueurEnCours.jouerCarte(carteJouable, this.talon.getCarteDessus());
 			this.talon.setCarteDessus(carteJouee); //on joue la carte
-			
 			
 			mainSuppr = this.joueurEnCours.getMain();
 			mainSuppr.remove(carteJouee);
@@ -63,21 +66,12 @@ public class Jeu {
 			}
 			else{
 				int nbCartesReste;
-				System.out.println("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.\n");
-				
-				
-			/*
-				mainSuppr = this.joueurEnCours.getMain();
-				mainSuppr.remove(carteJouee);
-				this.joueurEnCours.setMain(mainSuppr);
-				*/
-				
+				System.out.println("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.\n");	
 			}
-		
 		}
 		
+		
 		else{		//si le joueur est un robot
-			
 		//if stratégie = 0
 			//méthode simple : toujours jouer la 1e carte jouable (aucune stratégie)
 			Carte carteJouee;
@@ -98,22 +92,66 @@ public class Jeu {
 			}
 			else{
 				int nbCartesReste;
-				System.out.println("Il reste "  +" " + this.joueurEnCours.getMain().size() +" cartes à "+ this.joueurEnCours.getNom());
+				System.out.println("Il reste "  +" " + this.joueurEnCours.getMain().size() +" cartes à "+ this.joueurEnCours.getNom());	
+			}	
+		}
+		//à partir d'ici le joueur a posé sa carte.
+		
+		
+		
+		if (this.talon.getCarteDessus().getEffet()==5){  //s'il y a changement de couleur (à cause d'un 8 par exemple)
+			if (this.joueurEnCours.getNom()=="moi"){ //si c'est moi qui joue, le programme me demande ce que je veux comme couleur
+				System.out.println("Vous avez joué un "+(this.talon.getCarteDessus().getNumero()+1) + ". -Changement de couleur-  Quelle couleur voulez-vous ?\n 0 pour Coeur\n 1 pour Pique\n 2 pour Carreau\n 3 pour Trèfle\n ");
+				int nouvelleCouleur;
+				nouvelleCouleur=sc.nextInt();
+				//on a la nouvelle couleur, on change la carte du dessus du talon
+				Carte nouvelleCarte;
+				nouvelleCarte=this.talon.getCarteDessus();
+				nouvelleCarte.setCouleur(nouvelleCouleur);
+				this.talon.setCarteDessus(nouvelleCarte);
 				
-				
-			/*
-				mainSuppr = this.joueurEnCours.getMain();
-				mainSuppr.remove(carteJouee);
-				this.joueurEnCours.setMain(mainSuppr);
-			*/
+				System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
 				
 			}
+			else{		//si c'est au robot de choisir, appel de méthode   A CHANGER DONC
+				
+				//pour le moment le robot ne change pas la couleur
+				System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus() + " (le robot n'a pas changé la couleur)");
+			}
+		}
 			
+		else{
+			System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
 		}
 		
-		System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
 		
-		this.prochainJoueur();
+		
+		//changer de sens
+		if (this.talon.getCarteDessus().getEffet()==2){
+			if (this.controleJeu.isSensPartie()) {
+				this.controleJeu.setSensPartie(false);	//si le sens est normal, on le met en "inverse"
+			}
+			else{
+				this.controleJeu.setSensPartie(true);   //si le sens est inverse, on le met en "normal"
+			}
+		}
+		
+		//effet rejouer  
+	//(et méthode prochainJoueur() pour le déroulement sans effet)
+		if (!(this.talon.getCarteDessus().getEffet()==1)) {		//si l'effet rejouer a été activé, on saute cette étape=>le joueur rejoue
+			System.out.println(this.joueurEnCours.getNom() +" rejoue !");
+			this.prochainJoueur();		//et si effet pas "rejouer" : on change de joueur
+		}								
+		
+		
+		//effet sauter prochain joueur  
+		if (this.talon.getCarteDessus().getEffet()==3){   //si effet saute tour, prochainJoueur() une 2e fois
+			this.prochainJoueur();
+		}
+		
+		
+		
+		
 		
 		this.verifPiocheVide();  //fin du tour : on vérifie que la pioche est pas vide/trop petite pour le prochain tour
 		
@@ -161,12 +199,12 @@ public class Jeu {
 
 			if(posJoueurEnCours==0){
 				this.posJoueurEnCours = (this.listeJoueurs.size()-1);
-				this.joueurEnCours=this.listeJoueurs.get(posJoueurEnCours);
+				this.joueurEnCours=this.listeJoueurs.get(this.posJoueurEnCours);
 				
 			}
 			else{
 				this.posJoueurEnCours--;
-				this.joueurEnCours=this.listeJoueurs.get(posJoueurEnCours);
+				this.joueurEnCours=this.listeJoueurs.get(this.posJoueurEnCours);
 			}
 		}
 	}

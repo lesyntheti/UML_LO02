@@ -6,7 +6,6 @@ public class Main {
 		
 		Initialisation initialisation = new Initialisation();
 		initialisation.initialiser();
-		
 		//important de récupérer les éléments de initialisation pour la création de l'objet jeu
 		Jeu jeu = new Jeu(initialisation.getPioche(), initialisation.getTalon(), initialisation.getNbJoueurs(), initialisation.getListeJoueurs());
 		
@@ -17,8 +16,10 @@ public class Main {
 		}
 		
 		System.out.println("\n -Partie terminée-\n\nLe vainqueur est " + jeu.getJoueurEnCours().getNom());
-		
-		
+		/*
+		ComptagePoints compte = new ComptagePoints();
+		compte.compterPoints(this.jeu);
+		*/
 
 	}
 

@@ -60,7 +60,7 @@ public class Joueur {
 		while (carteIt.hasNext()) {		//on teste les cartes 1 par 1 et compare avec la carte du dessus du talon
 			carte=carteIt.next();
 			if(carte!=null){
-				if (carte.getNumero() == carteTalon.getNumero() || carte.getCouleur() == carteTalon.getCouleur() || carte.getNumero() == 8) {
+				if (carte.getNumero() == carteTalon.getNumero() || carte.getCouleur() == carteTalon.getCouleur() || carte.getEffet()==5) {
 					mainJoueurJouableTemp.add(carte); //si la carte est jouable, on la place dans la mainJouableTemporaire du joueur
 				}
 			}
