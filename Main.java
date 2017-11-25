@@ -20,7 +20,12 @@ public class Main {
 		ComptagePoints compte = new ComptagePoints();
 		compte.compterPoints(this.jeu);
 		*/
-
+		jeu.comptePoints();
+		for(int i=0;i<jeu.listeJoueurs.size();i++){
+			if(jeu.listeJoueurs.get(i).getPoint()!=0) {
+				System.out.println(jeu.listeJoueurs.get(i).getNom()+" a obtenu "+jeu.listeJoueurs.get(i).getPoint()+" point!");
+			}
+		}
 	}
 
 }
