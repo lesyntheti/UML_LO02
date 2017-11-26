@@ -16,10 +16,9 @@ public class Main {
 		}
 		
 		System.out.println("\n -Partie terminée-\n\nLe vainqueur est " + jeu.getJoueurEnCours().getNom());
-		/*
-		ComptagePoints compte = new ComptagePoints();
-		compte.compterPoints(this.jeu);
-		*/
+		
+		
+		//comptage des points
 		jeu.comptePoints();
 		for(int i=0;i<jeu.listeJoueurs.size();i++){
 			if(jeu.listeJoueurs.get(i).getPoint()!=0) {

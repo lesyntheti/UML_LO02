@@ -1,6 +1,7 @@
 package crazyeightBis;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -15,6 +16,7 @@ public class Jeu {
 	private Joueur joueurEnCours;   //pour savoir qui faire jouer à chaque étape d'un tour
 	private ControleJeu controleJeu;
 	private int posJoueurEnCours;
+	private boolean contrePossible=false;
 	
 	Scanner sc = new Scanner(System.in);
 	
@@ -28,6 +30,7 @@ public class Jeu {
 		this.controleJeu = new ControleJeu();
 		posJoueurEnCours=this.listeJoueurs.size()-1; //si on veut commencer en premier à jouer
 		System.out.println("\nla premiere carte du talon est : " +this.talon.getCarteDessus());
+		
 	}
 
 
@@ -35,7 +38,7 @@ public class Jeu {
 	public boolean tourDeJeu(Joueur joueurEnCours){
 		
 		
-		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours); //dans le main il faudra envoyer controleJeu.joueurEnCours dans cette méthode
+		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours); 
 		ArrayList<Carte> carteJouable= new ArrayList<Carte>();
 		carteJouable = this.joueurEnCours.cartesJouables(this.talon.getCarteDessus());
 		int nbCartesJouables = carteJouable.size();
@@ -44,12 +47,13 @@ public class Jeu {
 		
 		if(nbCartesJouables==0){
 			this.joueurEnCours.piocherCarte(1, this.pioche);
-			System.out.println("\n"+this.joueurEnCours.getNom() +" pioche 1 carte");
+			System.out.println("\n"+this.joueurEnCours.getNom() +" n'a pas de carte jouable, il/elle pioche 1 carte");
 		}
 		
 		
 		else if (this.joueurEnCours.getNom()=="moi")  //si c'est à nous de jouer 
 		{	
+			
 			Carte carteJouee;
 			carteJouee=this.joueurEnCours.jouerCarte(carteJouable, this.talon.getCarteDessus());
 			this.talon.setCarteDessus(carteJouee); //on joue la carte
@@ -68,6 +72,8 @@ public class Jeu {
 				int nbCartesReste;
 				System.out.println("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.\n");	
 			}
+			
+			
 		}
 		
 		
@@ -134,19 +140,88 @@ public class Jeu {
 			else{
 				this.controleJeu.setSensPartie(true);   //si le sens est inverse, on le met en "normal"
 			}
+			System.out.println("Et on change de sens !");
 		}
+		
+		
+		
 		
 		//effet rejouer  
 	//(et méthode prochainJoueur() pour le déroulement sans effet)
 		if (!(this.talon.getCarteDessus().getEffet()==1)) {		//si l'effet rejouer a été activé, on saute cette étape=>le joueur rejoue
-			System.out.println(this.joueurEnCours.getNom() +" rejoue !");
+			
 			this.prochainJoueur();		//et si effet pas "rejouer" : on change de joueur
-		}								
+		}	
+		else
+			System.out.println(this.joueurEnCours.getNom() +" rejoue !");
+		
+		
+		
+				//ici, si l'effet est attaquer, c'est le prochain joueur qui est en cours
+		
+		//méthode d'attaque(4*) : selon si une(41), deux(42), ou trois(43) cartes à piocher
+				if(this.talon.getCarteDessus().getEffet()==41 || this.talon.getCarteDessus().getEffet()==42 || this.talon.getCarteDessus().getEffet()==43 ){
+					
+					this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
+					
+					if (this.talon.getCarteDessus().getEffet()==41){ //pioche 1 carte
+						this.joueurEnCours.piocherCarte(1, this.pioche);
+						System.out.println("Ouuh le joueur "+this.joueurEnCours.getNom() +" se prend 1 carte !");
+					
+					}
+						
+					
+					else if (this.talon.getCarteDessus().getEffet()==42){  //pioche 2 carte
+						this.joueurEnCours.piocherCarte(2, this.pioche);
+						System.out.println("Ohlala ! Le joueur "+this.joueurEnCours.getNom() +" se prend 2 cartes !");
+					}
+					
+					else if (this.talon.getCarteDessus().getEffet()==43){  //pioche 3 carte, mais peut être contré ensuite
+						
+						
+							//on teste pour savoir si le joueur a une/des carte(s) pour contrer
+						Carte carteContre;	
+						int nbCartesAPiocher=3;
+						
+						Iterator<Carte> carteIt = this.joueurEnCours.getMain().iterator();
+	
+						while (carteIt.hasNext()) {		//on teste les cartes 1 par 1 et compare avec la carte du dessus du talon
+							carteContre=carteIt.next();
+							if(carteContre!=null){
+								if (carteContre.getNumero() == 7) { //simple contre avec un 8
+									contrePossible=true;
+								}
+								else if (carteContre.getNumero() == 0){  //contre ET cumul d'effet (avec un As)
+									contrePossible=true;
+									nbCartesAPiocher+=3; //on cumule l'effet  (se remet à zéro quand le prochain joueur se prend tout
+								
+								}
+							}	
+						}
+					
+					
+						if (!contrePossible){ //si le joueur ne pourra pas contrer au prochain tour, il pioche
+							if (this.talon.getCarteDessus().getNumero()==7){
+								nbCartesAPiocher=0;  //si jamais le joueur précédent avait un As mais à joué un 8 à la place, il n'y a plus de cumul d'effet
+								this.joueurEnCours.piocherCarte(nbCartesAPiocher, this.pioche);
+								System.out.println("Pouloulou ! Le joueur "+this.joueurEnCours.getNom() +" se prend "+nbCartesAPiocher+" cartes !");
+								nbCartesAPiocher=3;  //on reset l'effet
+								contrePossible=false;
+							}
+						}
+						
+					}						
+				}
+				
 		
 		
 		//effet sauter prochain joueur  
 		if (this.talon.getCarteDessus().getEffet()==3){   //si effet saute tour, prochainJoueur() une 2e fois
+			this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
+			System.out.println("On saute le tour de "+this.joueurEnCours.getNom()+" !");
 			this.prochainJoueur();
+			
+			
 		}
 		
 		
@@ -311,6 +386,16 @@ public class Jeu {
 
 	public void setPosJoueurEnCours(int posJoueurEnCours) {
 		this.posJoueurEnCours = posJoueurEnCours;
+	}
+
+
+	public boolean isContrePossible() {
+		return contrePossible;
+	}
+
+
+	public void setContrePossible(boolean contrePossible) {
+		this.contrePossible = contrePossible;
 	}
 	
 	

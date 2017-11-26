@@ -3,10 +3,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class Joueur {
+public class Joueur  {
 
 	private String nom;
 	private ArrayList<Carte> main;
+	private int point;
 	
 	private Carte carteJouee; 
 	
@@ -55,18 +56,39 @@ public class Joueur {
 		ArrayList<Carte> mainJoueurJouableTemp= new ArrayList<Carte>();
 		Carte carte;
 		
-		Iterator<Carte> carteIt = this.main.iterator();
+		
+		
 
-		while (carteIt.hasNext()) {		//on teste les cartes 1 par 1 et compare avec la carte du dessus du talon
-			carte=carteIt.next();
-			if(carte!=null){
-				if (carte.getNumero() == carteTalon.getNumero() || carte.getCouleur() == carteTalon.getCouleur() || carte.getEffet()==5) {
-					mainJoueurJouableTemp.add(carte); //si la carte est jouable, on la place dans la mainJouableTemporaire du joueur
-				}
+		if (carteTalon.getEffet()==43){ //si le joueur doit contrer une attaque
+			Iterator<Carte> carteIt = this.main.iterator();
+			while (carteIt.hasNext()) {		//on teste les cartes 1 par 1 et compare avec la carte du dessus du talon
+				carte=carteIt.next();
+				if(carte!=null){
+					if (carte.getNumero() == 0) {
+						mainJoueurJouableTemp.add(carte); //si la carte est jouable, on la place dans la mainJouableTemporaire du joueur
+						
+					}
+					else if (carte.getNumero() == 7){
+						mainJoueurJouableTemp.add(carte); //si la carte est jouable, on la place dans la mainJouableTemporaire du joueur
+					}
+				}	
 			}
+			
+		}
+			
+		else{
+			Iterator<Carte> carteIt = this.main.iterator();
+			while (carteIt.hasNext()) {		//on teste les cartes 1 par 1 et compare avec la carte du dessus du talon
+				carte=carteIt.next();
+				if(carte!=null){
+					if (carte.getNumero() == carteTalon.getNumero() || carte.getCouleur() == carteTalon.getCouleur() || carte.getEffet()==5) {
+						mainJoueurJouableTemp.add(carte); //si la carte est jouable, on la place dans la mainJouableTemporaire du joueur
+					}
+				}	
+			}
+		}
 		
 			
-		}	
 		return mainJoueurJouableTemp;
 	}
 	
@@ -149,6 +171,16 @@ public class Joueur {
 
 	public void setMain(ArrayList<Carte> main) {
 		this.main = main;
+	}
+
+
+	public int getPoint() {
+		return point;
+	}
+
+
+	public void setPoint(int point) {
+		this.point = point;
 	}
 	
 	

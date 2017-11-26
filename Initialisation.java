@@ -16,7 +16,7 @@ public class Initialisation {
 	
 	
 	public Initialisation(){
-		System.out.println("objet initialisation créé");
+		System.out.println("--Partie commencée--\n");
 	}
 	
 	public void initialiser(){
