@@ -296,12 +296,12 @@ public class Jeu {
 				//verifier si la carte a effet, on lui donne 20 points. En plus, si c'est 8 on rajoute 30 points.
 				else if(main.get(j).getEffet()==1){
 					point=point+20;
-					if(main.get(j).getNumero()==8) {
+				}
+				else if(main.get(j).getEffet()==5) {
 						point=point+30;
-					}
 				}
 				else {
-					point=point+main.get(j).getNumero();
+					point=point+main.get(j).getNumero()+1;
 				}
 			}
 			listeJoueurs.get(i).setPoint(point);

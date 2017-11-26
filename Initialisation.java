@@ -52,13 +52,13 @@ public class Initialisation {
 		
 		this.setNbJoueurs(nbJoueurs);
 		
-		String nom, nomX;
+		String nom;
 		
 		//problèmes avec les noms des joueurs, sc.nextLine prend les Enter pour les noms suivants...
 		for (int i=0; i<nbJoueurs; i++){
 			System.out.println("nom du joueur ? (appuyer deux fois sur Enter si >1)\n");
 			nom = sc.nextLine();
-			nom = sc.nextLine();
+			nom += sc.nextLine();
 			Joueur joueur = new Joueur(nom);
 			ArrayList<Carte> mainTemp = new ArrayList<Carte>();
 			mainTemp=this.distribuerCartes(nbJoueurs);
