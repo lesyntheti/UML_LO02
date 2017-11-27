@@ -1,3 +1,4 @@
+
 package crazyeightBis;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,8 +14,10 @@ public class Jeu {
 	private ControleJeu controleJeu;
 	private int posJoueurEnCours;
 	private boolean contrePossible=false;
+  
 	private RobotStrategie strategie;
 	private int numStrategie;
+
 	Scanner sc = new Scanner(System.in);
 
 	//doit avoir créé une initialisation d'abord !
@@ -28,6 +31,7 @@ public class Jeu {
 		posJoueurEnCours=this.listeJoueurs.size()-1; //si on veut commencer en premier à jouer
 		System.out.println("\nla premiere carte du talon est : " +this.talon.getCarteDessus());
 		this.numStrategie=numStrategie;
+
 	}
 	
 	//méthode de tour de jeu  (à appeler une fois que tous les éléments ont étés initialisés avec l'objet initialisation)
@@ -228,7 +232,7 @@ public class Jeu {
 					}
 				}
 				else {
-					point=point+main.get(j).getNumero()+1;
+					point=point+main.get(j).getNumero();
 				}
 			}
 			listeJoueurs.get(i).setPoint(point);
@@ -303,4 +307,5 @@ public class Jeu {
 		this.strategie.jouer(this);
 	}
 	
+
 }
