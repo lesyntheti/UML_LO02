@@ -7,7 +7,7 @@ public class Main {
 		Initialisation initialisation = new Initialisation();
 		initialisation.initialiser();
 		//important de récupérer les éléments de initialisation pour la création de l'objet jeu
-		Jeu jeu = new Jeu(initialisation.getPioche(), initialisation.getTalon(), initialisation.getNbJoueurs(), initialisation.getListeJoueurs());
+		Jeu jeu = new Jeu(initialisation.getPioche(), initialisation.getTalon(), initialisation.getNbJoueurs(), initialisation.getListeJoueurs(),initialisation.getNumStrategie());
 		
 		
 		
