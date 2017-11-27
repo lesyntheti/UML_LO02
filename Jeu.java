@@ -14,11 +14,15 @@ public class Jeu {
 	private ControleJeu controleJeu;
 	private int posJoueurEnCours;
 	private boolean contrePossible=false;
+  
+	private RobotStrategie strategie;
+	private int numStrategie;
+
 	Scanner sc = new Scanner(System.in);
 
 	//doit avoir créé une initialisation d'abord !
 	//constructeur du jeu avec les paramètres de initialisation
-	public Jeu(Pioche pioche, Talon talon, int nbJoueurs, ArrayList<Joueur> listeJoueurs) {
+	public Jeu(Pioche pioche, Talon talon, int nbJoueurs, ArrayList<Joueur> listeJoueurs,int numStrategie) {
 		this.pioche = pioche;
 		this.talon = talon;
 		this.nbJoueurs = nbJoueurs;
@@ -26,6 +30,8 @@ public class Jeu {
 		this.controleJeu = new ControleJeu();
 		posJoueurEnCours=this.listeJoueurs.size()-1; //si on veut commencer en premier à jouer
 		System.out.println("\nla premiere carte du talon est : " +this.talon.getCarteDessus());
+		this.numStrategie=numStrategie;
+
 	}
 	
 	//méthode de tour de jeu  (à appeler une fois que tous les éléments ont étés initialisés avec l'objet initialisation)
@@ -63,7 +69,14 @@ public class Jeu {
 			//if stratégie = 0
 			//méthode simple : toujours jouer la 1e carte jouable (aucune stratégie)
 			Carte carteJouee;
-			carteJouee=carteJouable.get(0);
+			//carteJouee=carteJouable.get(0);
+			if(numStrategie==0) {
+				strategie=new RobotBete();
+				carteJouee=strategie.jouer(this);
+			}else {
+				strategie=new RobotIntelligent();
+				carteJouee=strategie.jouer(this);
+			}
 			this.talon.setCarteDessus(carteJouee); //on joue la carte
 			System.out.println("\n"+ this.joueurEnCours.getNom() +" joue le " +carteJouee);
 			mainSuppr = this.joueurEnCours.getMain();
@@ -212,7 +225,7 @@ public class Jeu {
 					point=point+10;
 				}
 				//verifier si la carte a effet, on lui donne 20 points. En plus, si c'est 8 on rajoute 30 points.
-				else if(main.get(j).getEffet()==1){
+				else if(main.get(j).getEffet()!=0){
 					point=point+20;
 					if(main.get(j).getNumero()==7) {
 						point=point+30;
@@ -286,4 +299,13 @@ public class Jeu {
 	public void setContrePossible(boolean contrePossible) {
 		this.contrePossible = contrePossible;
 	}
+
+	public void setStrategie(RobotStrategie strategie) {
+		this.strategie = strategie;
+	}
+	public void jouer() {
+		this.strategie.jouer(this);
+	}
+	
+
 }
