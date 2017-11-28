@@ -14,6 +14,7 @@ public class Jeu {
 	private ControleJeu controleJeu;
 	private int posJoueurEnCours;
 	private boolean contrePossible=false;
+	private boolean doitPasJouer=false;
   
 	private RobotStrategie strategie;
 	private int numStrategie;
@@ -41,10 +42,13 @@ public class Jeu {
 		carteJouable = this.joueurEnCours.cartesJouables(this.talon.getCarteDessus());
 		int nbCartesJouables = carteJouable.size();
 		ArrayList<Carte> mainSuppr = new ArrayList<Carte>();
+		
 		if(nbCartesJouables==0){
 			this.joueurEnCours.piocherCarte(1, this.pioche);
 			System.out.println("\n"+this.joueurEnCours.getNom() +" n'a pas de carte jouable, il/elle pioche 1 carte");
+			doitPasJouer=true;
 		}
+	
 		else if (this.joueurEnCours.getNom()=="moi")  //si c'est à nous de jouer 
 		{	
 			Carte carteJouee;
@@ -93,8 +97,10 @@ public class Jeu {
 			}	
 		}
 		//à partir d'ici le joueur a posé sa carte.
+	
+		
 		if (this.talon.getCarteDessus().getEffet()==5){  //s'il y a changement de couleur (à cause d'un 8 par exemple)
-			if (this.joueurEnCours.getNom()=="moi"){ //si c'est moi qui joue, le programme me demande ce que je veux comme couleur
+			if (this.joueurEnCours.getNom()=="moi" && !doitPasJouer){ //si c'est moi qui joue, le programme me demande ce que je veux comme couleur
 				System.out.println("Vous avez joué un "+(this.talon.getCarteDessus().getNumero()+1) + ". -Changement de couleur-  Quelle couleur voulez-vous ?\n 0 pour Coeur\n 1 pour Pique\n 2 pour Carreau\n 3 pour Trèfle\n ");
 				int nouvelleCouleur;
 				nouvelleCouleur=sc.nextInt();
@@ -108,6 +114,7 @@ public class Jeu {
 			else{		//si c'est au robot de choisir, appel de méthode   A CHANGER DONC
 				//pour le moment le robot ne change pas la couleur
 				System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus() + " (le robot n'a pas changé la couleur)");
+				doitPasJouer=false;
 			}
 		}
 		else{
@@ -126,11 +133,17 @@ public class Jeu {
 		//effet rejouer  
 		//(et méthode prochainJoueur() pour le déroulement sans effet)
 		if (!(this.talon.getCarteDessus().getEffet()==1)) {		//si l'effet rejouer a été activé, on saute cette étape=>le joueur rejoue
-			this.prochainJoueur();		//et si effet pas "rejouer" : on change de joueur
+			
+			this.prochainJoueur();	//et si effet pas "rejouer" : on change de joueur
+			
+			
 		}	
 		else
 			System.out.println(this.joueurEnCours.getNom() +" rejoue !");
-				//ici, si l'effet est attaquer, c'est le prochain joueur qui est en cours
+			
+		
+		
+		//ici, si l'effet est attaquer, c'est le prochain joueur qui est en cours
 				//méthode d'attaque(4*) : selon si une(41), deux(42), ou trois(43) cartes à piocher
 				if(this.talon.getCarteDessus().getEffet()==41 || this.talon.getCarteDessus().getEffet()==42 || this.talon.getCarteDessus().getEffet()==43 ){
 					this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
@@ -171,6 +184,7 @@ public class Jeu {
 					}						
 				}
 
+				
 		//effet sauter prochain joueur  
 		if (this.talon.getCarteDessus().getEffet()==3){   //si effet saute tour, prochainJoueur() une 2e fois
 			this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
@@ -181,6 +195,8 @@ public class Jeu {
 		return gagnant;
 	}
 
+	
+	
 	public void verifPiocheVide(){   //à faire tourner à chaque fin de tour
 		if (this.pioche.getDeck().size()<4){		//si la pioche devient trop petite, on la remplie
 			ArrayList<Carte> nouvellePioche = new ArrayList<Carte>();

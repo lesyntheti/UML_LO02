@@ -42,9 +42,9 @@ public class Initialisation {
 
 		this.setNbJoueurs(nbJoueurs);
 		String nom;
-		//problèmes avec les noms des joueurs, sc.nextLine prend les Enter pour les noms suivants...
+		
 		for (int i=0; i<nbJoueurs; i++){
-			System.out.println("nom du joueur ? (appuyer deux fois sur Enter si >1)\n");
+			System.out.println("nom du joueur adverse "+(i+1)+" ? \n");
 			nom = sc.nextLine();
 			nom += sc.nextLine();
 			Joueur joueur = new Joueur(nom);
