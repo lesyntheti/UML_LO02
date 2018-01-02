@@ -1,4 +1,4 @@
-package crazyeightBis;
+package modele;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -17,7 +17,10 @@ public class Joueur  {
 		//on créé un joueur avec une main vide
 	}
 
-	
+	public Joueur(){
+		this.main = new ArrayList<Carte>();
+		//on créé un joueur avec une main vide
+	}
 	
  	
 	public void jouerUneCarte(Carte dessusPile,ArrayList<Carte> main) {
@@ -48,7 +51,7 @@ public class Joueur  {
 	}
 	
 	
-	
+	//-------------------méthode cartes jouables--------------------
 	
 	
 	public ArrayList<Carte> cartesJouables(Carte carteTalon){
@@ -87,17 +90,20 @@ public class Joueur  {
 				}	
 			}
 		}
-		
 			
 		return mainJoueurJouableTemp;
 	}
 	
 	
+	//-------------------méthode piocher carte--------------------
 	
 	public void piocherCarte(int nbCartes, Pioche pioche){
 		for (int i=0; i<nbCartes; i++)
 			this.main.add(pioche.tirerCarte());  //le joueur pioche autant de cartes que précisé dans l'appel
 	}
+	
+	
+	//-------------------méthodes jouerCarte/choixCarte--------------------
 	
 	
 	public Carte jouerCarte(ArrayList<Carte> cartesJouables, Carte carteDessus){
@@ -148,6 +154,9 @@ public class Joueur  {
 		
 		return carteChoisie;
 	}
+	
+	
+	//-------------------Getters et Setters--------------------
 	
 	
 	public void changerNom() {

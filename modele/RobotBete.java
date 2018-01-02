@@ -1,4 +1,4 @@
-package crazyeightBis;
+package modele;
 
 import java.util.ArrayList;
 

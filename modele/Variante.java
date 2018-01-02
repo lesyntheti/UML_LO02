@@ -1,10 +1,15 @@
-package crazyeightBis;
+package modele;
 
 import java.util.*;
+
+import vue.VarianteVue;
+
+
 
 public class Variante {
 
 	Scanner sc = new Scanner(System.in);
+	public static int numeroVarianteG=0;
 	
 	public Variante(){
 		
@@ -14,8 +19,24 @@ public class Variante {
 	
 	public Pioche nouvelleVariante(Pioche pioche){
 		
-		int numeroVariante=0;
 		
+		
+		VarianteVue varianteVue = new VarianteVue();
+		
+		while (numeroVarianteG<1 || numeroVarianteG>4) {
+			
+			try {
+				//System.out.println("attente variante");
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		int numeroVariante=this.numeroVarianteG;
+		
+		
+		/*
 		System.out.println("\nQuelle variante voulez-vous jouer ?");
 		System.out.println("tappez 1 pour la variante minimaliste");
 		System.out.println("tappez 2 pour la variante \"carte et maou\"");
@@ -23,11 +44,17 @@ public class Variante {
 		
 		
 		while(numeroVariante<1 || numeroVariante>4){
-			numeroVariante = sc.nextInt();
+			
+			
+			//numeroVariante = sc.nextInt();
+			
+			
 			if (numeroVariante<1 || numeroVariante>4)
 				System.out.println("nombre doit etre entre 1 et 3 please");
 		//on s'assure que le joueur rentre un nombre entre 1 et 3
 		}
+		
+		*/
 		
 		//selon le numéro entré, la méthode appelle la variante correspondante
 		
@@ -202,5 +229,9 @@ public class Variante {
 		
 		return pioche;
 	}
+
+	
+
+	
 	
 }

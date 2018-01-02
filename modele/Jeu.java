@@ -1,5 +1,5 @@
 
-package crazyeightBis;
+package modele;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -34,6 +34,10 @@ public class Jeu {
 		this.numStrategie=numStrategie;
 
 	}
+	
+	
+	//-------------------Méthode tour de Jeu--------------------
+	
 	
 	//méthode de tour de jeu  (à appeler une fois que tous les éléments ont étés initialisés avec l'objet initialisation)
 	public boolean tourDeJeu(Joueur joueurEnCours){
@@ -96,7 +100,10 @@ public class Jeu {
 				System.out.println("Il reste "  +" " + this.joueurEnCours.getMain().size() +" cartes à "+ this.joueurEnCours.getNom());	
 			}	
 		}
-		//à partir d'ici le joueur a posé sa carte.
+		
+		//       -----------Effets durant tour-------------
+		
+		//(à partir d'ici le joueur a posé sa carte)
 	
 		
 		if (this.talon.getCarteDessus().getEffet()==5){  //s'il y a changement de couleur (à cause d'un 8 par exemple)
@@ -196,6 +203,8 @@ public class Jeu {
 	}
 
 	
+	//-------------------Autres méthodes--------------------
+	
 	
 	public void verifPiocheVide(){   //à faire tourner à chaque fin de tour
 		if (this.pioche.getDeck().size()<4){		//si la pioche devient trop petite, on la remplie
@@ -254,7 +263,11 @@ public class Jeu {
 			listeJoueurs.get(i).setPoint(point);
 		}
 	}
-	//getters and setters
+	
+	
+	//-------------------Getters et Setters--------------------
+	
+	
 	public Initialisation getInitialisation() {
 		return initialisation;
 	}

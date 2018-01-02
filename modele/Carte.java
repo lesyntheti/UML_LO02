@@ -1,4 +1,4 @@
-package crazyeightBis;
+package modele;
 
 public class Carte {
 
