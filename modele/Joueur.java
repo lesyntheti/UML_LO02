@@ -129,7 +129,7 @@ public class Joueur  {
 			System.out.println(i1.next());	//on affiche toute la main du joueur
 			
 		}
-		
+		wait1();
 		int index;
 		System.out.println("\nVos cartes jouables sont :\n");
 		Iterator<Carte> i2=this.main.iterator(); // on crée un Iterator pour parcourir notre ArrayList
@@ -149,6 +149,7 @@ public class Joueur  {
             numCarteChoisie = sc.nextInt();
         } while (numCarteChoisie < 0 || numCarteChoisie > (cartesJouables.size()-1));
 		
+		wait1();
 		 carteChoisie=cartesJouables.get(numCarteChoisie);
 		 System.out.println("vous avez choisi le "+carteChoisie);
 		
@@ -156,6 +157,16 @@ public class Joueur  {
 	}
 	
 	
+	private void wait1() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 	//-------------------Getters et Setters--------------------
 	
 	

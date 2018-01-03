@@ -1,25 +1,13 @@
 package vue;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import modele.Carte;
 
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-
-public class FenetreTest extends JPanel {
+public class TableJeuVue {
 
 	private JFrame frame;
 
@@ -27,11 +15,10 @@ public class FenetreTest extends JPanel {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FenetreTest window = new FenetreTest();
+					TableJeuVue window = new TableJeuVue();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +30,7 @@ public class FenetreTest extends JPanel {
 	/**
 	 * Create the application.
 	 */
-	public FenetreTest() {
+	public TableJeuVue() {
 		initialize();
 	}
 
@@ -51,7 +38,6 @@ public class FenetreTest extends JPanel {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.YELLOW);
 		frame.setBounds(100, 100, 900, 600);
@@ -63,12 +49,12 @@ public class FenetreTest extends JPanel {
 		blank.setBounds(52,418, 82, 116);
 		frame.getContentPane().add(blank);
 		
-		
+		/*
 		Carte carteTest = new Carte(0,0);
 		CarteVue carteVue = new CarteVue(carteTest);
 		carteVue.setBounds(100, 100, 82, 116);
 		frame.getContentPane().add(carteVue);
-		System.out.println(carteTest);
+		 */
 		
 		
 		//en dernier (background)
@@ -77,10 +63,7 @@ public class FenetreTest extends JPanel {
 		frame.getContentPane().add(background);
 		
 		
-		
 		frame.setVisible(true);
-		
 	}
-	
-	
+
 }

@@ -32,6 +32,7 @@ public class Jeu {
 		posJoueurEnCours=this.listeJoueurs.size()-1; //si on veut commencer en premier à jouer
 		System.out.println("\nla premiere carte du talon est : " +this.talon.getCarteDessus());
 		this.numStrategie=numStrategie;
+		wait1();
 
 	}
 	
@@ -51,6 +52,7 @@ public class Jeu {
 			this.joueurEnCours.piocherCarte(1, this.pioche);
 			System.out.println("\n"+this.joueurEnCours.getNom() +" n'a pas de carte jouable, il/elle pioche 1 carte");
 			doitPasJouer=true;
+			wait1(); //attendre 3 secondes, pour qu'on voit le jeu se dérouler quoi
 		}
 	
 		else if (this.joueurEnCours.getNom()=="moi")  //si c'est à nous de jouer 
@@ -61,6 +63,8 @@ public class Jeu {
 			mainSuppr = this.joueurEnCours.getMain();
 			mainSuppr.remove(carteJouee);
 			this.joueurEnCours.setMain(mainSuppr); //on supprime la carte jouée de la main du joueur
+			wait1();
+			
 			//on vérifie si le joueur a encore des cartes (si oui, on continue, si non, il a gagné !)
 			if (this.joueurEnCours.getMain().isEmpty()){
 				System.out.println("vous n'avez plus de cartes, bravo !");
@@ -70,6 +74,7 @@ public class Jeu {
 			else{
 				int nbCartesReste;
 				System.out.println("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.\n");	
+				wait1();
 			}
 		}
 		else{
@@ -90,6 +95,8 @@ public class Jeu {
 			mainSuppr = this.joueurEnCours.getMain();
 			mainSuppr.remove(carteJouee);
 			this.joueurEnCours.setMain(mainSuppr);
+			wait1();
+			
 			if (this.joueurEnCours.getMain().isEmpty()){
 				System.out.println(this.joueurEnCours.getNom() +" n'a plus de cartes");
 				this.setGagnant(true);
@@ -97,7 +104,8 @@ public class Jeu {
 			}
 			else{
 				int nbCartesReste;
-				System.out.println("Il reste "  +" " + this.joueurEnCours.getMain().size() +" cartes à "+ this.joueurEnCours.getNom());	
+				System.out.println("Il reste "  +" " + this.joueurEnCours.getMain().size() +" cartes à "+ this.joueurEnCours.getNom());
+				wait1();
 			}	
 		}
 		
@@ -122,10 +130,12 @@ public class Jeu {
 				//pour le moment le robot ne change pas la couleur
 				System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus() + " (le robot n'a pas changé la couleur)");
 				doitPasJouer=false;
+				wait2();
 			}
 		}
 		else{
 			System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
+			wait2();
 		}
 		//changer de sens
 		if (this.talon.getCarteDessus().getEffet()==2){
@@ -136,6 +146,7 @@ public class Jeu {
 				this.controleJeu.setSensPartie(true);   //si le sens est inverse, on le met en "normal"
 			}
 			System.out.println("Et on change de sens !");
+			wait2();
 		}
 		//effet rejouer  
 		//(et méthode prochainJoueur() pour le déroulement sans effet)
@@ -145,9 +156,10 @@ public class Jeu {
 			
 			
 		}	
-		else
+		else{
 			System.out.println(this.joueurEnCours.getNom() +" rejoue !");
-			
+			wait1();
+		}
 		
 		
 		//ici, si l'effet est attaquer, c'est le prochain joueur qui est en cours
@@ -196,6 +208,7 @@ public class Jeu {
 		if (this.talon.getCarteDessus().getEffet()==3){   //si effet saute tour, prochainJoueur() une 2e fois
 			this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
 			System.out.println("On saute le tour de "+this.joueurEnCours.getNom()+" !");
+			wait2();
 			this.prochainJoueur();
 		}
 		this.verifPiocheVide();  //fin du tour : on vérifie que la pioche est pas vide/trop petite pour le prochain tour
@@ -336,5 +349,30 @@ public class Jeu {
 		this.strategie.jouer(this);
 	}
 	
+	public static void wait3(){
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	public static void wait2(){
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void wait1(){
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
