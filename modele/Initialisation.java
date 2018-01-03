@@ -36,7 +36,7 @@ public class Initialisation {
 													// leurs mains remplies
 		// System.out.println("il y a "+listeJoueurs.size()+"joueur adverse,
 		// avec"+listeJoueurs.get(0).getMain().size()+"cartes");
-		this.numStrategie = setNumStrategie();
+		//this.numStrategie = setNumStrategie();  // ne se fait plus car pris en charge par la GUI
 		// System.out.println("Quelle mode voulez-vous jouer? Entrez 0 pour les
 		// robots betes et 1 pour les robots intelligents");
 	}
@@ -71,6 +71,7 @@ public class Initialisation {
 		Main.suivant = false;
 		
 		choixJ.setDifficulty();
+		numStrategie=ChoixJoueursVue.niveau;
 		
 		while (!Main.suivant) {		//on attend que le joueur choisisse la difficulte
 			try {
@@ -157,7 +158,7 @@ public class Initialisation {
 																// joueur lors
 																// de son
 																// instanciation
-		// à faire
+																// à faire
 		ArrayList<Carte> deck = new ArrayList<Carte>();
 		deck = this.pioche.getDeck();
 		ArrayList<Carte> mainTemp = new ArrayList<Carte>();

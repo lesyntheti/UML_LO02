@@ -2,8 +2,13 @@
 package modele;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 import java.util.Scanner;
-public class Jeu {
+
+import vue.TableJeuVue;
+
+public class Jeu extends Observable{
+	
 	private Initialisation initialisation;
 	private Pioche pioche;
 	private Talon talon;
@@ -33,7 +38,12 @@ public class Jeu {
 		System.out.println("\nla premiere carte du talon est : " +this.talon.getCarteDessus());
 		this.numStrategie=numStrategie;
 		wait1();
-
+		
+		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
+		
+		TableJeuVue window = new TableJeuVue(this.joueurEnCours.getMain(), this.talon.getCarteDessus());
+		//TableJeuVue window = new TableJeuVue(cartesMoi, carteTalon);
+		
 	}
 	
 	
@@ -58,11 +68,22 @@ public class Jeu {
 		else if (this.joueurEnCours.getNom()=="moi")  //si c'est à nous de jouer 
 		{	
 			Carte carteJouee;
+			
+			//ici la méthode à remplacer par celle de la GUI
 			carteJouee=this.joueurEnCours.jouerCarte(carteJouable, this.talon.getCarteDessus());
+			
+			
+			
 			this.talon.setCarteDessus(carteJouee); //on joue la carte
 			mainSuppr = this.joueurEnCours.getMain();
 			mainSuppr.remove(carteJouee);
 			this.joueurEnCours.setMain(mainSuppr); //on supprime la carte jouée de la main du joueur
+			
+			
+	//on notifie, pour que le GUI actualise le talon et la main du joueur
+			setChanged();
+			notifyObservers();
+			
 			wait1();
 			
 			//on vérifie si le joueur a encore des cartes (si oui, on continue, si non, il a gagné !)
@@ -91,10 +112,17 @@ public class Jeu {
 				carteJouee=strategie.jouer(this);
 			}
 			this.talon.setCarteDessus(carteJouee); //on joue la carte
+			
 			System.out.println("\n"+ this.joueurEnCours.getNom() +" joue le " +carteJouee);
 			mainSuppr = this.joueurEnCours.getMain();
 			mainSuppr.remove(carteJouee);
 			this.joueurEnCours.setMain(mainSuppr);
+			
+	//notify
+			setChanged();
+			notifyObservers();
+			
+			
 			wait1();
 			
 			if (this.joueurEnCours.getMain().isEmpty()){

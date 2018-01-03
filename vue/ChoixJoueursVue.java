@@ -103,6 +103,10 @@ public class ChoixJoueursVue {
 				});
 				btnValider.setBounds(327, 243, 117, 29);
 				frame.getContentPane().add(btnValider);
+				
+				BackgroundBis background = new BackgroundBis();
+				background.setBounds(0, 0, 450, 300);
+				frame.getContentPane().add(background);
 			}
 		});
 		radioButton.setBounds(25, 58, 141, 23);
@@ -161,6 +165,12 @@ public class ChoixJoueursVue {
 				});
 				btnValider.setBounds(327, 243, 117, 29);
 				frame.getContentPane().add(btnValider);
+				
+				BackgroundBis background = new BackgroundBis();
+				background.setBounds(0, 0, 450, 300);
+				frame.getContentPane().add(background);
+				
+				
 			}
 		});
 		radioButton_1.setBounds(25, 106, 141, 23);
@@ -230,10 +240,25 @@ public class ChoixJoueursVue {
 				btnValider.setBounds(327, 243, 117, 29);
 				frame.getContentPane().add(btnValider);
 				
+				BackgroundBis background = new BackgroundBis();
+				background.setBounds(0, 0, 450, 300);
+				frame.getContentPane().add(background);
 			}
 		});
 		radioButton_2.setBounds(25, 156, 141, 23);
 		frame.getContentPane().add(radioButton_2);
+		
+		
+		JLabel lblChoixDuNombre = new JLabel("Choix du Nombre d'opposants");
+		lblChoixDuNombre.setBounds(132, 25, 192, 16);
+		frame.add(lblChoixDuNombre);
+		
+		BackgroundBis background = new BackgroundBis();
+		background.setBounds(0, 0, 450, 300);
+		frame.getContentPane().add(background);
+		background.setLayout(null);
+		
+		
 		
 		/*
 		
@@ -278,7 +303,7 @@ public class ChoixJoueursVue {
 	
 	public void setDifficulty(){
 		frame.getContentPane().removeAll();
-		frame.getContentPane().repaint();
+		
 		
 		JButton btnDebutant = new JButton("Debutant");
 		btnDebutant.addActionListener(new ActionListener() {
@@ -307,6 +332,10 @@ public class ChoixJoueursVue {
 		JLabel lblChoisirLeNiveau = new JLabel("Choisir le niveau des bots");
 		lblChoisirLeNiveau.setBounds(149, 48, 180, 16);
 		frame.getContentPane().add(lblChoisirLeNiveau);
+		
+		BackgroundBis background = new BackgroundBis();
+		background.setBounds(0, 0, 450, 300);
+		frame.getContentPane().add(background);
 		
 		frame.getContentPane().repaint();
 	}
