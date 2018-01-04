@@ -23,6 +23,8 @@ public class Jeu extends Observable{
   
 	private RobotStrategie strategie;
 	private int numStrategie;
+	
+	public static boolean attenteChoixCarte=false;
 
 	Scanner sc = new Scanner(System.in);
 
@@ -41,7 +43,7 @@ public class Jeu extends Observable{
 		
 		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
 		
-		TableJeuVue window = new TableJeuVue(this.joueurEnCours.getMain(), this.talon.getCarteDessus());
+		TableJeuVue window = new TableJeuVue(this, this.joueurEnCours.getMain(), this.talon.getCarteDessus());
 		//TableJeuVue window = new TableJeuVue(cartesMoi, carteTalon);
 		
 	}
@@ -62,16 +64,38 @@ public class Jeu extends Observable{
 			this.joueurEnCours.piocherCarte(1, this.pioche);
 			System.out.println("\n"+this.joueurEnCours.getNom() +" n'a pas de carte jouable, il/elle pioche 1 carte");
 			doitPasJouer=true;
-			wait1(); //attendre 3 secondes, pour qu'on voit le jeu se dérouler quoi
+			setChanged();
+			notifyObservers();
+			wait1(); //attendre 1 secondes, pour qu'on voit le jeu se dérouler quoi
 		}
 	
 		else if (this.joueurEnCours.getNom()=="moi")  //si c'est à nous de jouer 
 		{	
-			Carte carteJouee;
+			Carte carteJouee; // on cree une fausse carte qui ne peut jamais etre jouee
 			
 			//ici la méthode à remplacer par celle de la GUI
-			carteJouee=this.joueurEnCours.jouerCarte(carteJouable, this.talon.getCarteDessus());
+			//carteJouee=this.joueurEnCours.jouerCarte(carteJouable, this.talon.getCarteDessus());
 			
+			attenteChoixCarte=true;
+			
+			
+			do{
+				while (attenteChoixCarte){
+					try {
+						//System.out.println("attente selection carte");
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				attenteChoixCarte=true;
+				System.out.println(TableJeuVue.carteSelectionnee);
+				if (!TableJeuVue.carteSelectionnee.pouvoirJoue(this.talon.getCarteDessus()))
+					System.out.println("choix incompatible");
+			}while (!TableJeuVue.carteSelectionnee.pouvoirJoue(this.talon.getCarteDessus()));
+			//GUI : changer carte jouee
+			carteJouee=TableJeuVue.carteSelectionnee;
 			
 			
 			this.talon.setCarteDessus(carteJouee); //on joue la carte

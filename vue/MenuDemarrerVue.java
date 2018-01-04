@@ -37,6 +37,7 @@ public class MenuDemarrerVue implements Observer {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.getContentPane().setFont(new Font("Lucida Grande", Font.BOLD, 12));
 		frame.getContentPane().setBackground(new Color(0, 153, 0));
 		frame.getContentPane().setLayout(null);
@@ -44,7 +45,7 @@ public class MenuDemarrerVue implements Observer {
 		btnDebuterPartie = new JButton("Debuter partie");
 		btnDebuterPartie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("fonctionne");
+				//System.out.println("fonctionne");
 				
 				frame.setVisible(false); //on "quitte" le menu démarrer pour passer au jeu
 				modele.Main.suivant=true;

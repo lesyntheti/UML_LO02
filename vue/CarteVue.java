@@ -40,7 +40,10 @@ public class CarteVue extends JPanel implements Observer {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
+				//me.setBounds(me.getX(), me.getY() - 45, me.getWidth(), me.getHeight());
+				System.out.println(carte);
+				TableJeuVue.carteSelectionnee=carte;
+				modele.Jeu.attenteChoixCarte=false;
 			}
 
 			@Override

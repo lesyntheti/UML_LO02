@@ -108,6 +108,9 @@ public class Joueur  {
 	
 	public Carte jouerCarte(ArrayList<Carte> cartesJouables, Carte carteDessus){
 		
+		
+		
+		//pour la méthode console, on utilise cette méthode
 		carteJouee=choixCarte(cartesJouables, carteDessus);//on fait un choix parmis les cartes
 	        //on appelle une méthode pour demander au joueur de choisir une de ses cartes jouables
 		

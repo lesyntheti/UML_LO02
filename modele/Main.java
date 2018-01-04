@@ -38,7 +38,7 @@ public class Main {
 		// comptage des points
 		jeu.comptePoints();
 		for (int i = 0; i < jeu.listeJoueurs.size(); i++) {
-			System.out.println("en pause");
+			//System.out.println("en pause");
 			if (jeu.listeJoueurs.get(i).getPoint() != 0) {
 				System.out.println(jeu.listeJoueurs.get(i).getNom() + " a obtenu " + jeu.listeJoueurs.get(i).getPoint()
 						+ " point!");

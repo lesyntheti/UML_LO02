@@ -58,6 +58,7 @@ public class ChoixJoueursVue {
 	public void initialize() {
 		
 		frame = new JFrame();
+		frame.setResizable(false);
 		
 		frame.getContentPane().removeAll();
 		frame.getContentPane().repaint();

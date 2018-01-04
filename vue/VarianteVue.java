@@ -26,6 +26,7 @@ public class VarianteVue {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.getContentPane().setBackground(new Color(0, 153, 0));
 		frame.getContentPane().setLayout(null);
 

@@ -19,6 +19,8 @@ public class TableJeuVue implements Observer{
 	private Jeu jeuEnCours;
 	private Carte carteTalon;
 	
+	public static Carte carteSelectionnee;
+	
 
 	/**
 	 * Launch the application.
@@ -27,8 +29,8 @@ public class TableJeuVue implements Observer{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//createCards();
-					//TableJeuVue window = new TableJeuVue(cartesMoi, carteTalon);
+					//a mettre en vert à l'execution
+					//TableJeuVue window = new TableJeuVue();
 					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,16 +42,23 @@ public class TableJeuVue implements Observer{
 	/**
 	 * Create the application.
 	 */
-	public TableJeuVue(ArrayList<Carte> cartesMoi, Carte carteTalon) {
+	public TableJeuVue(Jeu jeuEnCours, ArrayList<Carte> cartesMoi, Carte carteTalon) {
+		// a enlever a l execution
+		//createCards();
 		
 		initialize(cartesMoi, carteTalon);
+		this.jeuEnCours=jeuEnCours;
+		System.out.println("on ajoute un observer");
+		this.jeuEnCours.addObserver(this);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(ArrayList<Carte> cartesMoi, Carte carteTalon) {
+		System.out.println("initialise s execute");
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.getContentPane().setBackground(Color.YELLOW);
 		frame.setBounds(100, 100, 900, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +71,7 @@ public class TableJeuVue implements Observer{
 		
 		
 		
-		
+		//on lie le jeu de carte modele à celui vue
 		this.cartesMoi=cartesMoi;
 		int j=1;
 		Iterator<Carte> i1=cartesMoi.iterator(); // on crée un Iterator pour parcourir notre ArrayList
@@ -74,11 +83,11 @@ public class TableJeuVue implements Observer{
 			carteVue.setBounds(start+(j*50),418, 82, 116);
 			frame.getContentPane().add(carteVue);
 			j++;
-			System.out.println(i1.toString());
+			//System.out.println(i1.toString());  //affiche les cartes du joueur, marche pas bien...
 		}
 		
 		
-		
+		//on lie le talon du jeu à celui de la vue
 		this.carteTalon=carteTalon;
 		//Carte carteTalon = new Carte(0,0);
 		CarteTalonVue carteTalonVue = new CarteTalonVue(carteTalon);
@@ -99,6 +108,7 @@ public class TableJeuVue implements Observer{
 	
 	public void actualiser(ArrayList<Carte> cartesMoi, Carte carteTalon){
 	
+		System.out.println("methode actualiser s execute");
 		frame.getContentPane().removeAll();
 		
 		CarteCachee blank = new CarteCachee();
@@ -119,7 +129,7 @@ public class TableJeuVue implements Observer{
 			carteVue.setBounds(start+(j*50),418, 82, 116);
 			frame.getContentPane().add(carteVue);
 			j++;
-			System.out.println(i1.toString());
+			//System.out.println(i1.toString());
 		}
 		
 		
@@ -150,14 +160,19 @@ public class TableJeuVue implements Observer{
 	
 	@Override
 	public void update(Observable instanceObservable, Object arg) {
+		System.out.println("update s execute");
 		if (instanceObservable instanceof modele.Jeu) {
 			Jeu jeuEnCours=(Jeu)instanceObservable;
 			//si il y a eu un changement dans notre main (et sur le talon donc)
 			 if (jeuEnCours.getJoueurEnCours().getNom()=="moi"){
+				 System.out.println("actualisation moi");
 				 cartesMoi=jeuEnCours.getJoueurEnCours().getMain();
+				 carteTalon=jeuEnCours.getTalon().getCarteDessus();
 				 actualiser(cartesMoi, carteTalon); //on refait le plateau de jeu avec le nouvel affichage de sa main
 			 }
 			 else{   //si un bot a joué une carte et que le talon a change donc
+				 System.out.println("actualisation bot");
+				 carteTalon=jeuEnCours.getTalon().getCarteDessus();
 				 actualiser(cartesMoi, carteTalon); 
 			 }
 		}
