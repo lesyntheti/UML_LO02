@@ -53,6 +53,7 @@ public class TableJeuVue implements Observer{
 		this.jeuEnCours=jeuEnCours;
 		System.out.println("on ajoute un observer");
 		this.jeuEnCours.addObserver(this);
+		
 	}
 
 	/**
@@ -62,7 +63,7 @@ public class TableJeuVue implements Observer{
 		System.out.println("initialise s execute");
 		frame = new JFrame();
 		frame.setResizable(false);
-		frame.getContentPane().setBackground(Color.YELLOW);
+		frame.getContentPane().setBackground(new Color(4, 68, 15));
 		frame.setBounds(100, 100, 900, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -76,7 +77,7 @@ public class TableJeuVue implements Observer{
 		
 		JLabel lblPioche = new JLabel("Pioche");
 		lblPioche.setBounds(72, 536, 100, 16);
-		frame.add(lblPioche);
+		frame.getContentPane().add(lblPioche);
 		lblPioche.setForeground(Color.WHITE);
 		
 		//test
@@ -193,15 +194,95 @@ public class TableJeuVue implements Observer{
 	}
 
 	
+	//________________________________________________________________________________________________________________
+	
+	
+	
 	public void actualiser(ArrayList<Carte> cartesMoi, Carte carteTalon){
 	
-		System.out.println("methode actualiser s execute");
+		//System.out.println("methode actualiser s execute");
 		frame.getContentPane().removeAll();
 		
+
+		//ajout image et label pioche
 		CarteCachee blank = new CarteCachee();
 		blank.setBounds(52,418, 82, 116);
 		frame.getContentPane().add(blank);
+		blank.setLayout(null);
 		
+		JLabel lblPioche = new JLabel("Pioche");
+		lblPioche.setBounds(72, 536, 100, 16);
+		frame.getContentPane().add(lblPioche);
+		lblPioche.setForeground(Color.WHITE);
+		
+		
+		
+		//ajout jeux et labels adversaires selon le nombre d'adversaires
+		this.nbJoueursAdv=ChoixJoueursVue.staticAdv;
+		
+		switch(nbJoueursAdv){
+			case 1 : 
+				CarteCachee adv1cas1 = new CarteCachee();
+				adv1cas1.setBounds((frame.getWidth()/2)-41,52, 82, 116);
+				frame.getContentPane().add(adv1cas1);
+				
+				JLabel lblj1c1 = new JLabel(ChoixJoueursVue.nom1);
+				lblj1c1.setBounds((frame.getWidth()/2)-41,170, 100, 16);
+				frame.getContentPane().add(lblj1c1);
+				lblj1c1.setForeground(Color.WHITE);
+			break;
+		
+			case 2 : 
+				CarteCachee adv1cas2 = new CarteCachee();
+				adv1cas2.setBounds(52,(frame.getHeight()/2)-138, 82, 116);
+				frame.getContentPane().add(adv1cas2);
+				
+				JLabel lblj1c2 = new JLabel(ChoixJoueursVue.nom1);
+				lblj1c2.setBounds(52,(frame.getHeight()/2)-20, 100, 16);
+				frame.getContentPane().add(lblj1c2);
+				lblj1c2.setForeground(Color.WHITE);
+				
+				CarteCachee adv2cas2 = new CarteCachee();
+				adv2cas2.setBounds(766,(frame.getHeight()/2)-138, 82, 116);
+				frame.getContentPane().add(adv2cas2);
+				
+				JLabel lblj2c2 = new JLabel(ChoixJoueursVue.nom2);
+				lblj2c2.setBounds(766,(frame.getHeight()/2)-20, 100, 16);
+				frame.getContentPane().add(lblj2c2);
+				lblj2c2.setForeground(Color.WHITE);
+			break;
+			
+			case 3 : 
+				CarteCachee adv1cas3 = new CarteCachee();
+				adv1cas3.setBounds((frame.getWidth()/2)-41,52, 82, 116);
+				frame.getContentPane().add(adv1cas3);
+				
+				JLabel lblj1c3 = new JLabel(ChoixJoueursVue.nom1);
+				lblj1c3.setBounds((frame.getWidth()/2)-41,170, 100, 16);
+				frame.getContentPane().add(lblj1c3);
+				lblj1c3.setForeground(Color.WHITE);
+				
+				
+				CarteCachee adv2cas3 = new CarteCachee();
+				adv2cas3.setBounds(52,(frame.getHeight()/2)-138, 82, 116);
+				frame.getContentPane().add(adv2cas3);
+				
+				JLabel lblj2c3 = new JLabel(ChoixJoueursVue.nom2);
+				lblj2c3.setBounds(52,(frame.getHeight()/2)-20, 100, 16);
+				frame.getContentPane().add(lblj2c3);
+				lblj2c3.setForeground(Color.WHITE);
+				
+				
+				CarteCachee adv3cas3 = new CarteCachee();
+				adv3cas3.setBounds(766,(frame.getHeight()/2)-138, 82, 116);
+				frame.getContentPane().add(adv3cas3);
+				
+				JLabel lblj3c3 = new JLabel(ChoixJoueursVue.nom3);
+				lblj3c3.setBounds(766,(frame.getHeight()/2)-20, 100, 16);
+				frame.getContentPane().add(lblj3c3);
+				lblj3c3.setForeground(Color.WHITE);
+			break;
+		}
 		
 		
 		
@@ -247,20 +328,23 @@ public class TableJeuVue implements Observer{
 	
 	@Override
 	public void update(Observable instanceObservable, Object arg) {
-		System.out.println("update s execute");
+		//System.out.println("update s execute");
 		if (instanceObservable instanceof modele.Jeu) {
 			Jeu jeuEnCours=(Jeu)instanceObservable;
 			//si il y a eu un changement dans notre main (et sur le talon donc)
 			 if (jeuEnCours.getJoueurEnCours().getNom()=="moi"){
-				 System.out.println("actualisation moi");
+				 //System.out.println("actualisation moi");
 				 cartesMoi=jeuEnCours.getJoueurEnCours().getMain();
 				 carteTalon=jeuEnCours.getTalon().getCarteDessus();
 				 actualiser(cartesMoi, carteTalon); //on refait le plateau de jeu avec le nouvel affichage de sa main
 			 }
 			 else{   //si un bot a joué une carte et que le talon a change donc
-				 System.out.println("actualisation bot");
+				 //System.out.println("actualisation bot");
 				 carteTalon=jeuEnCours.getTalon().getCarteDessus();
 				 actualiser(cartesMoi, carteTalon); 
+			 }
+			 if(jeuEnCours.isGagnant()){
+				 frame.setVisible(false);
 			 }
 		}
 		

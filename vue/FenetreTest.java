@@ -57,7 +57,7 @@ public class FenetreTest extends JPanel {
 	private void initialize(ArrayList<Carte> carteJouable) {
 		
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.YELLOW);
+		frame.getContentPane().setBackground(new Color(4, 68, 15));
 		frame.setBounds(100, 100, 900, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -78,7 +78,7 @@ public class FenetreTest extends JPanel {
 			carteVue.setBounds(start+(j*50),418, 82, 116);
 			frame.getContentPane().add(carteVue);
 			j++;
-			System.out.println(i1.toString());
+			
 		}
 		
 		
@@ -89,12 +89,12 @@ public class FenetreTest extends JPanel {
 		frame.getContentPane().add(carteVue);
 		System.out.println(carteTest);
 		*/
-		
+		/*
 		//en dernier (background)
 		BackgroundPanel background = new BackgroundPanel();
 		background.setBounds(0, 0, 900, 600);
 		frame.getContentPane().add(background);
-		
+		*/
 		
 		
 		frame.setVisible(true);
