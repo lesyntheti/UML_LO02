@@ -424,9 +424,12 @@ public class Jeu extends Observable{
 		this.strategie.jouer(this);
 	}
 	
+	
+	//tous les waits sont mis a 500 pour que les tests d execution aillent plus vite
+	
 	public static void wait3(){
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -435,7 +438,7 @@ public class Jeu extends Observable{
 
 	public static void wait2(){
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -444,7 +447,7 @@ public class Jeu extends Observable{
 	
 	public static void wait1(){
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

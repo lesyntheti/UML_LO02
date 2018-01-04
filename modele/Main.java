@@ -1,6 +1,7 @@
 package modele;
 
 import vue.MenuDemarrerVue;
+import vue.VueGagnant;
 
 public class Main {
 
@@ -33,8 +34,11 @@ public class Main {
 			jeu.tourDeJeu(jeu.getJoueurEnCours());
 		}
 
+		
 		System.out.println("\n -Partie terminée-\n\nLe vainqueur est " + jeu.getJoueurEnCours().getNom());
 
+		VueGagnant finalwindow = new VueGagnant(jeu);
+		
 		// comptage des points
 		jeu.comptePoints();
 		for (int i = 0; i < jeu.listeJoueurs.size(); i++) {
