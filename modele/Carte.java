@@ -28,7 +28,9 @@ private int numero, couleur, effet;
 	
 
 	
-	
+	public int getNumeroCouleur(){
+		return couleur;
+	}
 	
 	public void setCouleur(int couleur) {
 		this.couleur = couleur;

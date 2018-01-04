@@ -184,7 +184,7 @@ public class ChoixJoueursVue {
 		radioButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				staticAdv=1;
+				staticAdv=3;
 				
 				frame.getContentPane().removeAll();
 				frame.getContentPane().repaint();

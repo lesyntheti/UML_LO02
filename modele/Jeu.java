@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Scanner;
 
+import vue.ChoixCouleurVue;
 import vue.TableJeuVue;
 
 public class Jeu extends Observable{
@@ -25,6 +26,8 @@ public class Jeu extends Observable{
 	private int numStrategie;
 	
 	public static boolean attenteChoixCarte=false;
+	public static int nouvelleCouleur;
+	public static boolean attenteNouvelleCouleur=false;
 
 	Scanner sc = new Scanner(System.in);
 
@@ -168,19 +171,39 @@ public class Jeu extends Observable{
 		
 		if (this.talon.getCarteDessus().getEffet()==5){  //s'il y a changement de couleur (à cause d'un 8 par exemple)
 			if (this.joueurEnCours.getNom()=="moi" && !doitPasJouer){ //si c'est moi qui joue, le programme me demande ce que je veux comme couleur
+				
+				
+				ChoixCouleurVue choixCouleur = new ChoixCouleurVue();
+				attenteNouvelleCouleur=true;
+				do{
+					try {
+						Thread.sleep(500);
+						System.out.println("attente nouvelle couleur");
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}while(attenteNouvelleCouleur);
+				
+				
+				//remplacer par une GUI -> ChoixCouleurVue
+				/*
 				System.out.println("Vous avez joué un "+(this.talon.getCarteDessus().getNumero()+1) + ". -Changement de couleur-  Quelle couleur voulez-vous ?\n 0 pour Coeur\n 1 pour Pique\n 2 pour Carreau\n 3 pour Trèfle\n ");
 				int nouvelleCouleur;
 				nouvelleCouleur=sc.nextInt();
+				*/
+				
+				
 				//on a la nouvelle couleur, on change la carte du dessus du talon
 				Carte nouvelleCarte;
 				nouvelleCarte=this.talon.getCarteDessus();
 				nouvelleCarte.setCouleur(nouvelleCouleur);
 				this.talon.setCarteDessus(nouvelleCarte);
 				System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
+				wait2();
 			}
 			else{		//si c'est au robot de choisir, appel de méthode   A CHANGER DONC
 				//pour le moment le robot ne change pas la couleur
-				System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus() + " (le robot n'a pas changé la couleur)");
+				System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus() /*+ " (le robot n'a pas changé la couleur)"*/);
 				doitPasJouer=false;
 				wait2();
 			}
