@@ -198,6 +198,7 @@ public class Jeu extends Observable{
 				nouvelleCarte=this.talon.getCarteDessus();
 				nouvelleCarte.setCouleur(nouvelleCouleur);
 				this.talon.setCarteDessus(nouvelleCarte);
+				choixCouleur.getFrame().setVisible(false);
 				System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
 				//wait1();
 			}

@@ -49,19 +49,23 @@ public class Initialisation {
 		nbJoueurs = 0;
 
 		Main.suivant = false;
+		
 
 		ChoixJoueursVue choixJ = new ChoixJoueursVue();
-		choixJ.reset = false;
+		choixJ.reset=false;
 		
 		
 
 		while (!Main.suivant) {
 			try {
 				// System.out.println("attente joueurs");
-				Thread.sleep(1000);
-				// if (choixJ.reset=true){
-				//
-				// }
+				if (choixJ.reset){
+					choixJ.reset = false;
+					choixJ.initializeAgain();
+				}
+				
+				Thread.sleep(500);
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -9,10 +9,12 @@ import modele.Carte;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ChoixCouleurVue {
 
-	private JFrame frame, frame1;
+	private JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -83,4 +85,9 @@ public class ChoixCouleurVue {
 	
 		
 	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
 }
