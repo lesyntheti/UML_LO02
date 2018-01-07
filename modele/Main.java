@@ -37,10 +37,13 @@ public class Main {
 		
 		System.out.println("\n -Partie terminée-\n\nLe vainqueur est " + jeu.getJoueurEnCours().getNom());
 
-		VueGagnant finalwindow = new VueGagnant(jeu);
-		
+
 		// comptage des points
 		jeu.comptePoints();
+		
+		//affichage scores et gagnant
+		VueGagnant finalwindow = new VueGagnant(jeu);
+		
 		for (int i = 0; i < jeu.listeJoueurs.size(); i++) {
 			//System.out.println("en pause");
 			if (jeu.listeJoueurs.get(i).getPoint() != 0) {

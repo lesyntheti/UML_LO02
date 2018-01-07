@@ -14,7 +14,7 @@ public class Jeu extends Observable{
 	private Pioche pioche;
 	private Talon talon;
 	private int nbJoueurs;
-	protected ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
+	public ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
 	private boolean gagnant=false; //à envoyer vers le main (partie)
 	private Joueur joueurEnCours;   //pour savoir qui faire jouer à chaque étape d'un tour
 	private ControleJeu controleJeu;
