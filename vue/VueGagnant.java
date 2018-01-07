@@ -72,8 +72,9 @@ public class VueGagnant {
 				System.out.println(jeu.listeJoueurs.get(i).getNom() + " a obtenu " + jeu.listeJoueurs.get(i).getPoint()
 						+ " point!");
 				JLabel lblPoints = new JLabel(jeu.listeJoueurs.get(i).getNom() + " a obtenu " + jeu.listeJoueurs.get(i).getPoint()
-						+ " point!");
-				lblPoints.setBounds(486, 215+(i*50), 300, 20);
+						+ " point");
+				lblPoints.setBounds(486, 210+(i*50), 300, 25);
+				lblPoints.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 				frame.add(lblPoints);
 				
 			}

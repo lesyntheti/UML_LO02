@@ -111,7 +111,7 @@ public class Jeu extends Observable{
 			setChanged();
 			notifyObservers();
 			
-			wait1();
+			//wait1();
 			
 			//on vérifie si le joueur a encore des cartes (si oui, on continue, si non, il a gagné !)
 			if (this.joueurEnCours.getMain().isEmpty()){
@@ -122,7 +122,7 @@ public class Jeu extends Observable{
 			else{
 				int nbCartesReste;
 				System.out.println("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.\n");	
-				wait1();
+				//wait1();
 			}
 		}
 		else{
@@ -150,7 +150,7 @@ public class Jeu extends Observable{
 			notifyObservers();
 			
 			
-			wait1();
+			//wait1();
 			
 			if (this.joueurEnCours.getMain().isEmpty()){
 				System.out.println(this.joueurEnCours.getNom() +" n'a plus de cartes");
@@ -160,7 +160,7 @@ public class Jeu extends Observable{
 			else{
 				int nbCartesReste;
 				System.out.println("Il reste "  +" " + this.joueurEnCours.getMain().size() +" cartes à "+ this.joueurEnCours.getNom());
-				wait1();
+				//wait1();
 			}	
 		}
 		
@@ -199,18 +199,18 @@ public class Jeu extends Observable{
 				nouvelleCarte.setCouleur(nouvelleCouleur);
 				this.talon.setCarteDessus(nouvelleCarte);
 				System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
-				wait2();
+				//wait1();
 			}
 			else{		//si c'est au robot de choisir, appel de méthode   A CHANGER DONC
 				//pour le moment le robot ne change pas la couleur
 				System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus() /*+ " (le robot n'a pas changé la couleur)"*/);
 				doitPasJouer=false;
-				wait2();
+				//wait1();
 			}
 		}
 		else{
 			System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
-			wait2();
+			wait1();
 		}
 		//changer de sens
 		if (this.talon.getCarteDessus().getEffet()==2){
@@ -429,7 +429,7 @@ public class Jeu extends Observable{
 	
 	public static void wait3(){
 		try {
-			Thread.sleep(500);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -438,7 +438,7 @@ public class Jeu extends Observable{
 
 	public static void wait2(){
 		try {
-			Thread.sleep(500);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -447,7 +447,7 @@ public class Jeu extends Observable{
 	
 	public static void wait1(){
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -43,6 +43,7 @@ public class Carte8Vue extends JPanel {
 				System.out.println(carte.getCouleur());
 				modele.Jeu.nouvelleCouleur=carte.getNumeroCouleur();
 				modele.Jeu.attenteNouvelleCouleur=false;
+				me.setVisible(false);
 			}
 
 			@Override
