@@ -1,3 +1,4 @@
+
 package vue;
 
 import java.awt.Color;
@@ -32,6 +33,7 @@ public class VarianteVue {
 
 		
 		JButton btnMinimaliste = new JButton("Minimaliste");
+		btnMinimaliste.setToolTipText("<html>"+"10=rejouer<br>"+"8=change-couleur"+"</html>");
 		btnMinimaliste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("1 entered");
@@ -43,6 +45,7 @@ public class VarianteVue {
 		frame.getContentPane().add(btnMinimaliste);
 
 		JButton btnCarteEtMaou = new JButton("Carte et Maou");
+		btnCarteEtMaou.setToolTipText("<html>"+"10 rejoue"+"<br>8 passe le suivant"+"<br>7 fait piocher deux cartes"+"<br>valet changer la couleur"+"</html>");
 		btnCarteEtMaou.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modele.Variante.numeroVarianteG = 2;
@@ -53,6 +56,10 @@ public class VarianteVue {
 		frame.getContentPane().add(btnCarteEtMaou);
 
 		JButton btnMonclar = new JButton("Monclar");
+		btnMonclar.setToolTipText("<html>"+"7 : le joueur suivant passe son tour" + 
+				"<br>Valet : change le sens du jeu" + 
+				"<br>9 : fait piocher une carte au joueur suivant sans recours" + 
+				"<br>As : fait piocher<br>"+"8 : permet de changer de couleur et arrête les attaques"+"</html>");
 		btnMonclar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modele.Variante.numeroVarianteG = 3;
