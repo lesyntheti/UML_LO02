@@ -1,40 +1,26 @@
-package vue;
-
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-import modele.Carte;
-
 public class CarteVue extends JPanel implements Observer {
 
-	private Carte carte;
+	//private Carte carte;
 	private Image image;
+	private JPanel carteMe;
+	
+	private static Carte uneCarte;
 
 	/**
 	 * Create the panel.
 	 */
 	public CarteVue(Carte carte) {
-
-		//on charge l'image de la carte dans la variable carte, pour ensuite la réutiliser dans la méthode paintComponent
+		this.uneCarte=carte;
+		//on charge l'image de la carte dans la variable carte, pour ensuite la r茅utiliser dans la m茅thode paintComponent
 		try{
-            this.image = ImageIO.read(new File(("Cartes/"+carte+".png")));
+            this.image = ImageIO.read(new File(("src/Cartes/"+carte+".png")));
         } catch (IOException ex) {
             Logger.getLogger(CarteVue.class.getName()).log(Level.SEVERE, null, ex);
         }
+		JPanel carteMe = this;
+		new CarteControleur (uneCarte,carteMe);
 		
-		
-		JPanel me = this;
+		/*JPanel me = this;
 		
 		this.addMouseListener(new MouseListener() {
 
@@ -66,7 +52,7 @@ public class CarteVue extends JPanel implements Observer {
 				me.setBounds(me.getX(), me.getY() + 15, me.getWidth(), me.getHeight());
 			}
 
-		});
+		});*/
 
 	}
 
