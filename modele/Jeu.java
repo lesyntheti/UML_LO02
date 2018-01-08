@@ -21,6 +21,8 @@ public class Jeu extends Observable{
 	private int posJoueurEnCours;
 	private boolean contrePossible=false;
 	private boolean doitPasJouer=false;
+	private Carte carteJouee;
+	private int nbCartesReste;
   
 	private RobotStrategie strategie;
 	private int numStrategie;
@@ -70,6 +72,7 @@ public class Jeu extends Observable{
 			setChanged();
 			notifyObservers();
 			wait1(); //attendre 1 secondes, pour qu'on voit le jeu se dérouler quoi
+			this.prochainJoueur();
 		}
 	
 		else if (this.joueurEnCours.getNom()=="moi")  //si c'est à nous de jouer 
@@ -124,7 +127,47 @@ public class Jeu extends Observable{
 				System.out.println("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.\n");	
 				//wait1();
 			}
+			//effet 8
+			if (this.talon.getCarteDessus().getEffet()==5){ //si c'est moi qui joue, le programme me demande ce que je veux comme couleur
+				
+				
+				ChoixCouleurVue choixCouleur = new ChoixCouleurVue();
+				attenteNouvelleCouleur=true;
+				do{
+					try {
+						Thread.sleep(500);
+						System.out.println("attente nouvelle couleur");
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}while(attenteNouvelleCouleur);
+				Carte nouvelleCarte;
+				nouvelleCarte=this.talon.getCarteDessus();
+				nouvelleCarte.setCouleur(nouvelleCouleur);
+				this.talon.setCarteDessus(nouvelleCarte);
+				choixCouleur.getFrame().setVisible(false);
+				System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
+		}else{
+			System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
+			wait2();
+			doitPasJouer=false;
 		}
+			//effet rejoue
+			if (!(carteJouee.getEffet()==1)) {		//si l'effet rejouer a 茅t茅 activ茅, on saute cette 茅tape=>le joueur rejoue
+				
+				this.prochainJoueur();	//et si effet pas "rejouer" : on change de joueur
+			}	
+			else{
+				if(this.joueurEnCours.getMain().size()<=nbCartesReste) {
+				System.out.println(this.joueurEnCours.getNom() +" rejoue !");
+				wait1();
+				}else {
+					this.prochainJoueur();
+				}
+			}
+		}
+		
+		
 		else{
 			//si le joueur est un robot
 			//if stratégie = 0
@@ -162,57 +205,47 @@ public class Jeu extends Observable{
 				System.out.println("Il reste "  +" " + this.joueurEnCours.getMain().size() +" cartes à "+ this.joueurEnCours.getNom());
 				//wait1();
 			}	
+			//effet 8
+			if (this.talon.getCarteDessus().getEffet()==5){
+					if(numStrategie==0) {
+					
+					//System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus()/*+ " (le robot n'a pas chang茅 la couleur)"*/);
+					Carte nouvelleCarte = RobotIntelligent.changerCouleur(this);
+					nouvelleCarte=this.talon.getCarteDessus();
+					nouvelleCarte.setCouleur(nouvelleCouleur);
+					this.talon.setCarteDessus(nouvelleCarte);
+					System.out.println(this.joueurEnCours.getNom()+"a choix"+nouvelleCouleur);
+					System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
+				}else {
+					
+					System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus()/*+ " (le robot n'a pas chang茅 la couleur)"*/);
+					//wait1();
+					doitPasJouer=false;
+			}
+			
+		}else{
+			System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
+			wait2();
+		}
+			//effet rejoue
+			if (!(carteJouee.getEffet()==1)) {		//si l'effet rejouer a 茅t茅 activ茅, on saute cette 茅tape=>le joueur rejoue
+				
+				this.prochainJoueur();	//et si effet pas "rejouer" : on change de joueur
+			}	
+			else{
+				if(this.joueurEnCours.getMain().size()<=nbCartesReste) {
+				System.out.println(this.joueurEnCours.getNom() +" rejoue !");
+				wait1();
+				}else {
+					this.prochainJoueur();
+				}
+			}
 		}
 		
 		//       -----------Effets durant tour-------------
 		
 		//(à partir d'ici le joueur a posé sa carte)
 	
-		
-		if (this.talon.getCarteDessus().getEffet()==5){  //s'il y a changement de couleur (à cause d'un 8 par exemple)
-			if (this.joueurEnCours.getNom()=="moi" && !doitPasJouer){ //si c'est moi qui joue, le programme me demande ce que je veux comme couleur
-				
-				
-				ChoixCouleurVue choixCouleur = new ChoixCouleurVue();
-				attenteNouvelleCouleur=true;
-				do{
-					try {
-						Thread.sleep(500);
-						System.out.println("attente nouvelle couleur");
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}while(attenteNouvelleCouleur);
-				
-				
-				//remplacer par une GUI -> ChoixCouleurVue
-				/*
-				System.out.println("Vous avez joué un "+(this.talon.getCarteDessus().getNumero()+1) + ". -Changement de couleur-  Quelle couleur voulez-vous ?\n 0 pour Coeur\n 1 pour Pique\n 2 pour Carreau\n 3 pour Trèfle\n ");
-				int nouvelleCouleur;
-				nouvelleCouleur=sc.nextInt();
-				*/
-				
-				
-				//on a la nouvelle couleur, on change la carte du dessus du talon
-				Carte nouvelleCarte;
-				nouvelleCarte=this.talon.getCarteDessus();
-				nouvelleCarte.setCouleur(nouvelleCouleur);
-				this.talon.setCarteDessus(nouvelleCarte);
-				choixCouleur.getFrame().setVisible(false);
-				System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
-				//wait1();
-			}
-			else{		//si c'est au robot de choisir, appel de méthode   A CHANGER DONC
-				//pour le moment le robot ne change pas la couleur
-				System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus() /*+ " (le robot n'a pas changé la couleur)"*/);
-				doitPasJouer=false;
-				//wait1();
-			}
-		}
-		else{
-			System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
-			wait1();
-		}
 		//changer de sens
 		if (this.talon.getCarteDessus().getEffet()==2){
 			if (this.controleJeu.isSensPartie()) {
@@ -226,16 +259,6 @@ public class Jeu extends Observable{
 		}
 		//effet rejouer  
 		//(et méthode prochainJoueur() pour le déroulement sans effet)
-		if (!(this.talon.getCarteDessus().getEffet()==1)) {		//si l'effet rejouer a été activé, on saute cette étape=>le joueur rejoue
-			
-			this.prochainJoueur();	//et si effet pas "rejouer" : on change de joueur
-			
-			
-		}	
-		else{
-			System.out.println(this.joueurEnCours.getNom() +" rejoue !");
-			wait1();
-		}
 		
 		
 		//ici, si l'effet est attaquer, c'est le prochain joueur qui est en cours
