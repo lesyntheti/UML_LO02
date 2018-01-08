@@ -1,5 +1,3 @@
-package vue;
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -13,29 +11,33 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import controleur.Carte8Controleur;
+import controleur.CarteControleur;
 import modele.Carte;
 
 public class Carte8Vue extends JPanel {
 
 	private Carte carte;
 	private Image image;
+	private JPanel carteMe;
 
 	/**
 	 * Create the panel.
 	 */
 	public Carte8Vue(Carte carte) {
 
-		//on charge l'image de la carte dans la variable carte, pour ensuite la réutiliser dans la méthode paintComponent
+		//on charge l'image de la carte dans la variable carte, pour ensuite la r茅utiliser dans la m茅thode paintComponent
 		try{
-            this.image = ImageIO.read(new File(("Cartes/"+carte+".png")));
+            this.image = ImageIO.read(new File(("src/Cartes/"+carte+".png")));
         } catch (IOException ex) {
             Logger.getLogger(CarteVue.class.getName()).log(Level.SEVERE, null, ex);
         }
 		
 		
-		JPanel me = this;
+		carteMe = this;
+		new Carte8Controleur (carte,carteMe);
 		
-		this.addMouseListener(new MouseListener() {
+		/*this.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -43,7 +45,6 @@ public class Carte8Vue extends JPanel {
 				System.out.println(carte.getCouleur());
 				modele.Jeu.nouvelleCouleur=carte.getNumeroCouleur();
 				modele.Jeu.attenteNouvelleCouleur=false;
-				
 			}
 
 			@Override
@@ -66,7 +67,7 @@ public class Carte8Vue extends JPanel {
 				me.setBounds(me.getX(), me.getY() + 15, me.getWidth(), me.getHeight());
 			}
 
-		});
+		});*/
 
 	}
 
