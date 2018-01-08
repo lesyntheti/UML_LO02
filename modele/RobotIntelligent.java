@@ -6,6 +6,7 @@ public class RobotIntelligent implements RobotStrategie{
 	public Carte jouer(Jeu jeu) {
 		// TODO Auto-generated method stub
 		ArrayList<Carte> cartesJouables;
+
 		ArrayList<Carte> main;
 		cartesJouables=jeu.getJoueurEnCours().cartesJouables(jeu.getTalon().getCarteDessus());
 		main=jeu.getJoueurEnCours().getMain();
@@ -15,6 +16,7 @@ public class RobotIntelligent implements RobotStrategie{
 		int nbPique=0;
 		int nbTrefle=0;
 		int nbCarreau=0;
+
 		for(int i=0; i<main.size();i++) {
 	
 			if (main.get(i).getCouleur()=="Coeur") {
@@ -24,6 +26,7 @@ public class RobotIntelligent implements RobotStrategie{
 				nbPique++;
 			}
 			if (main.get(i).getCouleur()=="Trèfle") {
+
 				nbTrefle++;
 			}
 			if (main.get(i).getCouleur()=="Carreau") {
@@ -71,5 +74,47 @@ public class RobotIntelligent implements RobotStrategie{
 				}
 			}
 		return carteJouee;
+	}
+	public static Carte changerCouleur(Jeu jeu) {//quand le robot joue un 8
+		// TODO Auto-generated method stub
+		
+		//ArrayList<Carte> cartesJouables;
+		ArrayList<Carte> main;
+		//cartesJouables=jeu.getJoueurEnCours().cartesJouables(jeu.getTalon().getCarteDessus());
+		main=jeu.getJoueurEnCours().getMain();
+		
+		//pour recuperer le nombre de cartes dans chaque couleur
+		int nbCoeur=0;
+		int nbPique=0;
+		int nbTrefle=0;
+		int nbCarreau=0;
+		for(int i=0; i<main.size();i++) {
+	
+			if (main.get(i).getCouleur()=="Coeur") {
+				nbCoeur++;
+			}
+			if (main.get(i).getCouleur()=="Pique") {
+				nbPique++;
+			}
+			if (main.get(i).getCouleur()=="Trefle") {
+				nbTrefle++;
+			}
+			if (main.get(i).getCouleur()=="Carreau") {
+				nbCarreau++;
+			}
+		}
+		int nbCouleur[] = {nbCoeur,nbPique,nbCarreau,nbTrefle};
+		int nbGrand=0;
+		int couleurGrand=0;
+		
+		for(int i=0;i<=3;i++) {
+			if(nbCouleur[i]>=nbGrand) {
+				nbGrand=nbCouleur[i];
+				couleurGrand=i;
+			}
+		}
+		Carte carteChangee=new Carte(7,couleurGrand);
+		
+		return carteChangee;
 	}
 }
