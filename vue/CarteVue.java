@@ -1,3 +1,18 @@
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+import controleur.CarteControleur;
+import modele.Carte;
+
 public class CarteVue extends JPanel implements Observer {
 
 	//private Carte carte;

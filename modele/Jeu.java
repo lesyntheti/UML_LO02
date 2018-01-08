@@ -165,6 +165,26 @@ public class Jeu extends Observable{
 					this.prochainJoueur();
 				}
 			}
+			//changer de sens
+			if (this.talon.getCarteDessus().getEffet()==2){
+				if (this.controleJeu.isSensPartie()) {
+					this.controleJeu.setSensPartie(false);	//si le sens est normal, on le met en "inverse"
+				}
+				else{
+					this.controleJeu.setSensPartie(true);   //si le sens est inverse, on le met en "normal"
+				}
+				System.out.println("Et on change de sens !");
+				wait2();
+			}
+			
+			//effet sauter prochain joueur  
+			if (this.talon.getCarteDessus().getEffet()==3){   //si effet saute tour, prochainJoueur() une 2e fois
+				this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
+				System.out.println("On saute le tour de "+this.joueurEnCours.getNom()+" !");
+				wait2();
+				this.prochainJoueur();
+			}
+
 		}
 		
 		
@@ -175,10 +195,10 @@ public class Jeu extends Observable{
 			Carte carteJouee;
 			//carteJouee=carteJouable.get(0);
 			if(numStrategie==0) {
-				strategie=new RobotBete();
+				strategie=new RobotIntelligent();
 				carteJouee=strategie.jouer(this);
 			}else {
-				strategie=new RobotIntelligent();
+				strategie=new RobotBete();
 				carteJouee=strategie.jouer(this);
 			}
 			this.talon.setCarteDessus(carteJouee); //on joue la carte
@@ -240,24 +260,33 @@ public class Jeu extends Observable{
 					this.prochainJoueur();
 				}
 			}
+			//changer de sens
+			if (this.talon.getCarteDessus().getEffet()==2){
+				if (this.controleJeu.isSensPartie()) {
+					this.controleJeu.setSensPartie(false);	//si le sens est normal, on le met en "inverse"
+				}
+				else{
+					this.controleJeu.setSensPartie(true);   //si le sens est inverse, on le met en "normal"
+				}
+				System.out.println("Et on change de sens !");
+				wait2();
+			}
+			
+			//effet sauter prochain joueur  
+			if (this.talon.getCarteDessus().getEffet()==3){   //si effet saute tour, prochainJoueur() une 2e fois
+				this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
+				System.out.println("On saute le tour de "+this.joueurEnCours.getNom()+" !");
+				wait2();
+				this.prochainJoueur();
+			}
+
 		}
 		
 		//       -----------Effets durant tour-------------
 		
 		//(à partir d'ici le joueur a posé sa carte)
 	
-		//changer de sens
-		if (this.talon.getCarteDessus().getEffet()==2){
-			if (this.controleJeu.isSensPartie()) {
-				this.controleJeu.setSensPartie(false);	//si le sens est normal, on le met en "inverse"
-			}
-			else{
-				this.controleJeu.setSensPartie(true);   //si le sens est inverse, on le met en "normal"
-			}
-			System.out.println("Et on change de sens !");
-			wait2();
-		}
-		//effet rejouer  
+				//effet rejouer  
 		//(et méthode prochainJoueur() pour le déroulement sans effet)
 		
 		
@@ -303,13 +332,7 @@ public class Jeu extends Observable{
 				}
 
 				
-		//effet sauter prochain joueur  
-		if (this.talon.getCarteDessus().getEffet()==3){   //si effet saute tour, prochainJoueur() une 2e fois
-			this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
-			System.out.println("On saute le tour de "+this.joueurEnCours.getNom()+" !");
-			wait2();
-			this.prochainJoueur();
-		}
+		
 		this.verifPiocheVide();  //fin du tour : on vérifie que la pioche est pas vide/trop petite pour le prochain tour
 		return gagnant;
 	}

@@ -10,10 +10,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import modele.Carte;
 import modele.Jeu;
-import javax.swing.JLabel;
 
 public class TableJeuVue implements Observer {
 
