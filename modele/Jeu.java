@@ -1,64 +1,74 @@
 
 package modele;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Scanner;
 
+import javax.swing.JTextArea;
+
 import vue.ChoixCouleurVue;
 import vue.TableJeuVue;
 
-public class Jeu extends Observable{
-	
+public class Jeu extends Observable {
+
 	private Initialisation initialisation;
 	private Pioche pioche;
 	private Talon talon;
 	private int nbJoueurs;
 	public ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
-	private boolean gagnant=false; //à envoyer vers le main (partie)
-	private Joueur joueurEnCours;   //pour savoir qui faire jouer à chaque étape d'un tour
+	private boolean gagnant = false; // à envoyer vers le main (partie)
+	private Joueur joueurEnCours; // pour savoir qui faire jouer à chaque étape d'un tour
 	private ControleJeu controleJeu;
 	private int posJoueurEnCours;
-	private boolean contrePossible=false;
-	private boolean doitPasJouer=false;
+	private boolean contrePossible = false;
+	private boolean doitPasJouer = false;
 	private Carte carteJouee;
 	private int nbCartesReste;
-  
+
 	private RobotStrategie strategie;
 	private int numStrategie;
-	
-	public static boolean attenteChoixCarte=false;
+
+	public static boolean attenteChoixCarte = false;
 	public static int nouvelleCouleur;
-	public static boolean attenteNouvelleCouleur=false;
+	public static boolean attenteNouvelleCouleur = false;
+
+	private boolean changeText = false;
+	public String text;
 
 	Scanner sc = new Scanner(System.in);
 
-	//doit avoir créé une initialisation d'abord !
-	//constructeur du jeu avec les paramètres de initialisation
-	public Jeu(Pioche pioche, Talon talon, int nbJoueurs, ArrayList<Joueur> listeJoueurs,int numStrategie) {
+	// doit avoir créé une initialisation d'abord !
+	// constructeur du jeu avec les paramètres de initialisation
+	public Jeu(Pioche pioche, Talon talon, int nbJoueurs, ArrayList<Joueur> listeJoueurs, int numStrategie) {
 		this.pioche = pioche;
 		this.talon = talon;
 		this.nbJoueurs = nbJoueurs;
 		this.listeJoueurs = listeJoueurs;
 		this.controleJeu = new ControleJeu();
-		posJoueurEnCours=this.listeJoueurs.size()-1; //si on veut commencer en premier à jouer
-		System.out.println("\nla premiere carte du talon est : " +this.talon.getCarteDessus());
-		this.numStrategie=numStrategie;
+		posJoueurEnCours = this.listeJoueurs.size() - 1; // si on veut commencer en premier à jouer
+		System.out.println("\nla premiere carte du talon est : " + this.talon.getCarteDessus());
+
+		this.numStrategie = numStrategie;
 		wait1();
-		
+
 		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours);
-		
+
 		TableJeuVue window = new TableJeuVue(this, this.joueurEnCours.getMain(), this.talon.getCarteDessus());
-		//TableJeuVue window = new TableJeuVue(cartesMoi, carteTalon);
-		
+		// TableJeuVue window = new TableJeuVue(cartesMoi, carteTalon);
+
 	}
-	
-	
-	//-------------------Méthode tour de Jeu--------------------
-	
-	
-	//méthode de tour de jeu  (à appeler une fois que tous les éléments ont étés initialisés avec l'objet initialisation)
+
+	// -------------------Méthode tour de Jeu--------------------
+
+	// methode de tour de jeu (à appeler une fois que tous les éléments ont étés
+	// initialisés avec l'objet initialisation)
 	public boolean tourDeJeu(Joueur joueurEnCours){
+		//text="la premiere carte du talon est : ";//+this.talon.getCarteDessus();
+		//changeText=true;
+		//setChanged();
+		//notifyObservers();
 		this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours); 
 		ArrayList<Carte> carteJouable= new ArrayList<Carte>();
 		carteJouable = this.joueurEnCours.cartesJouables(this.talon.getCarteDessus());
@@ -66,8 +76,10 @@ public class Jeu extends Observable{
 		ArrayList<Carte> mainSuppr = new ArrayList<Carte>();
 		
 		if(nbCartesJouables==0){
-			this.joueurEnCours.piocherCarte(1, this.pioche);
+			this.joueurEnCours.piocherCarte(1, this.pioche); 
 			System.out.println("\n"+this.joueurEnCours.getNom() +" n'a pas de carte jouable, il/elle pioche 1 carte");
+			//setText(this.joueurEnCours.getNom() +" n'a pas de carte jouable, il/elle pioche 1 carte");
+			//setChangeText(true);
 			doitPasJouer=true;
 			setChanged();
 			notifyObservers();
@@ -98,7 +110,10 @@ public class Jeu extends Observable{
 				attenteChoixCarte=true;
 				System.out.println(TableJeuVue.carteSelectionnee);
 				if (!TableJeuVue.carteSelectionnee.pouvoirJoue(this.talon.getCarteDessus()))
+					//setText("choix incompatible");
 					System.out.println("choix incompatible");
+				//setChanged();
+				//notifyObservers();
 			}while (!TableJeuVue.carteSelectionnee.pouvoirJoue(this.talon.getCarteDessus()));
 			//GUI : changer carte jouee
 			carteJouee=TableJeuVue.carteSelectionnee;
@@ -123,8 +138,10 @@ public class Jeu extends Observable{
 				return true;
 			}
 			else{
-				int nbCartesReste;
 				System.out.println("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.\n");	
+				//setText("Il vous reste "  + this.joueurEnCours.getMain().size() +" cartes.");
+				//setChanged();
+				//notifyObservers();
 				//wait1();
 			}
 			//effet 8
@@ -147,23 +164,27 @@ public class Jeu extends Observable{
 				this.talon.setCarteDessus(nouvelleCarte);
 				choixCouleur.getFrame().setVisible(false);
 				System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
+				
 		}else{
 			System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus());
+			//setText("nouvelle carte sur talon : " +this.talon.getCarteDessus());
+			//setChanged();
+			//notifyObservers();
 			wait2();
 			doitPasJouer=false;
 		}
 			//effet rejoue
-			if (!(carteJouee.getEffet()==1)) {		//si l'effet rejouer a 茅t茅 activ茅, on saute cette 茅tape=>le joueur rejoue
+			if (!(carteJouee.getEffet()==1)) {		//si l'effet rejouer a ¨¦t¨¦ activ¨¦, on saute cette ¨¦tape=>le joueur rejoue
 				
 				this.prochainJoueur();	//et si effet pas "rejouer" : on change de joueur
 			}	
 			else{
-				if(this.joueurEnCours.getMain().size()<=nbCartesReste) {
+				//if(this.joueurEnCours.getMain().size()<=nbCartesReste) {
 				System.out.println(this.joueurEnCours.getNom() +" rejoue !");
 				wait1();
-				}else {
-					this.prochainJoueur();
-				}
+				//}else {
+				//	this.prochainJoueur();
+				//}
 			}
 			//changer de sens
 			if (this.talon.getCarteDessus().getEffet()==2){
@@ -191,8 +212,8 @@ public class Jeu extends Observable{
 		else{
 			//si le joueur est un robot
 			//if stratégie = 0
-			//méthode simple : toujours jouer la 1e carte jouable (aucune stratégie)
-			Carte carteJouee;
+			//m茅thode simple : toujours jouer la 1e carte jouable (aucune stratégie)
+			//Carte carteJouee;
 			//carteJouee=carteJouable.get(0);
 			if(numStrategie==0) {
 				strategie=new RobotIntelligent();
@@ -229,7 +250,7 @@ public class Jeu extends Observable{
 			if (this.talon.getCarteDessus().getEffet()==5){
 					if(numStrategie==0) {
 					
-					//System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus()/*+ " (le robot n'a pas chang茅 la couleur)"*/);
+					//System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus()/*+ " (le robot n'a pas changé la couleur)"*/);
 					Carte nouvelleCarte = RobotIntelligent.changerCouleur(this);
 					nouvelleCarte=this.talon.getCarteDessus();
 					nouvelleCarte.setCouleur(nouvelleCouleur);
@@ -238,7 +259,7 @@ public class Jeu extends Observable{
 					System.out.println("Nouvelle couleur du talon : " +this.talon.getCarteDessus().getCouleur());
 				}else {
 					
-					System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus()/*+ " (le robot n'a pas chang茅 la couleur)"*/);
+					System.out.println("\nnouvelle carte sur talon : " +this.talon.getCarteDessus()/*+ " (le robot n'a pas changé la couleur)"*/);
 					//wait1();
 					doitPasJouer=false;
 			}
@@ -248,17 +269,17 @@ public class Jeu extends Observable{
 			wait2();
 		}
 			//effet rejoue
-			if (!(carteJouee.getEffet()==1)) {		//si l'effet rejouer a 茅t茅 activ茅, on saute cette 茅tape=>le joueur rejoue
+			if (!(carteJouee.getEffet()==1)) {		//si l'effet rejouer a été activé, on saute cette étape=>le joueur rejoue
 				
 				this.prochainJoueur();	//et si effet pas "rejouer" : on change de joueur
 			}	
 			else{
-				if(this.joueurEnCours.getMain().size()<=nbCartesReste) {
+				//if(this.joueurEnCours.getMain().size()<=nbCartesReste) {
 				System.out.println(this.joueurEnCours.getNom() +" rejoue !");
 				wait1();
-				}else {
-					this.prochainJoueur();
-				}
+				//}else {
+			//	this.prochainJoueur();
+				//}
 			}
 			//changer de sens
 			if (this.talon.getCarteDessus().getEffet()==2){
@@ -321,7 +342,7 @@ public class Jeu extends Observable{
 						}
 						if (!contrePossible){ //si le joueur ne pourra pas contrer au prochain tour, il pioche
 							if (this.talon.getCarteDessus().getNumero()==7){
-								nbCartesAPiocher=0;  //si jamais le joueur précédent avait un As mais à joué un 8 à la place, il n'y a plus de cumul d'effet
+								nbCartesAPiocher=0;  //si jamais le joueur précdent avait un As mais à joué un 8 à la place, il n'y a plus de cumul d'effet
 								this.joueurEnCours.piocherCarte(nbCartesAPiocher, this.pioche);
 								System.out.println("Pouloulou ! Le joueur "+this.joueurEnCours.getNom() +" se prend "+nbCartesAPiocher+" cartes !");
 								nbCartesAPiocher=3;  //on reset l'effet
@@ -337,129 +358,144 @@ public class Jeu extends Observable{
 		return gagnant;
 	}
 
-	
-	//-------------------Autres méthodes--------------------
-	
-	
-	public void verifPiocheVide(){   //à faire tourner à chaque fin de tour
-		if (this.pioche.getDeck().size()<4){		//si la pioche devient trop petite, on la remplie
+	// -------------------Autres méthodes--------------------
+
+	public void verifPiocheVide() { // à faire tourner à chaque fin de tour
+		if (this.pioche.getDeck().size() < 4) { // si la pioche devient trop petite, on la remplie
 			ArrayList<Carte> nouvellePioche = new ArrayList<Carte>();
-			nouvellePioche =this.pioche.getDeck();
+			nouvellePioche = this.pioche.getDeck();
 			nouvellePioche.addAll(this.talon.getDessousPile());
-			this.pioche.setDeck(nouvellePioche);			//on remplie la pioche avec les cartes du talon
+			this.pioche.setDeck(nouvellePioche); // on remplie la pioche avec les cartes du talon
 			ArrayList<Carte> nouveauTalon = new ArrayList<Carte>();
-			nouveauTalon.clear();				
-			this.talon.setDessousPile(nouveauTalon);	//on vide le talon
+			nouveauTalon.clear();
+			this.talon.setDessousPile(nouveauTalon); // on vide le talon
 		}
 	}
-	
-	public void prochainJoueur(){
+
+	public void prochainJoueur() {
 		int posJoueurEnCours;
-		posJoueurEnCours=this.listeJoueurs.indexOf(joueurEnCours);  //inutile ?
-		if(controleJeu.isSensPartie()) { //si la partie va dans le sens "normal"
-			//this.joueurEnCours = (this.posJoueurEnCours + 1) % getNombreJoueur();
-			posJoueurEnCours=this.listeJoueurs.indexOf(joueurEnCours); //on récupère l'index du joueur précédent
-			this.posJoueurEnCours = (posJoueurEnCours +1)%this.listeJoueurs.size(); //on l'incrémente dans la limite du nombre de joueurs 
-			this.joueurEnCours=this.listeJoueurs.get(posJoueurEnCours); //on désigne le nouveau joueurEnCours
+		posJoueurEnCours = this.listeJoueurs.indexOf(joueurEnCours); // inutile ?
+		if (controleJeu.isSensPartie()) { // si la partie va dans le sens "normal"
+			// this.joueurEnCours = (this.posJoueurEnCours + 1) % getNombreJoueur();
+			posJoueurEnCours = this.listeJoueurs.indexOf(joueurEnCours); // on récupère l'index du joueur précédent
+			this.posJoueurEnCours = (posJoueurEnCours + 1) % this.listeJoueurs.size(); // on l'incrémente dans la limite
+																						// du nombre de joueurs
+			this.joueurEnCours = this.listeJoueurs.get(posJoueurEnCours); // on désigne le nouveau joueurEnCours
 		}
-		//si on va dans le sens inverse de la "normale"
-		else{
-			if(posJoueurEnCours==0){
-				this.posJoueurEnCours = (this.listeJoueurs.size()-1);
-				this.joueurEnCours=this.listeJoueurs.get(this.posJoueurEnCours);
-			}
-			else{
+		// si on va dans le sens inverse de la "normale"
+		else {
+			if (posJoueurEnCours == 0) {
+				this.posJoueurEnCours = (this.listeJoueurs.size() - 1);
+				this.joueurEnCours = this.listeJoueurs.get(this.posJoueurEnCours);
+			} else {
 				this.posJoueurEnCours--;
-				this.joueurEnCours=this.listeJoueurs.get(this.posJoueurEnCours);
+				this.joueurEnCours = this.listeJoueurs.get(this.posJoueurEnCours);
 			}
 		}
 	}
 
 	public void comptePoints() {
-		for(int i=0;i<this.listeJoueurs.size();i++) {
-			ArrayList<Carte> main=listeJoueurs.get(i).getMain();
-			int point=0;
-			//listeJoueurs.get(i).setPoint(0);
-			for (int j=0;j< main.size();j++) {
-				if((main.get(j).getNumero()==11)||(main.get(j).getNumero()==12)) {
-					point=point+10;
+		for (int i = 0; i < this.listeJoueurs.size(); i++) {
+			ArrayList<Carte> main = listeJoueurs.get(i).getMain();
+			int point = 0;
+			// listeJoueurs.get(i).setPoint(0);
+			for (int j = 0; j < main.size(); j++) {
+				if ((main.get(j).getNumero() == 11) || (main.get(j).getNumero() == 12)) {
+					point = point + 10;
 				}
-				//verifier si la carte a effet, on lui donne 20 points. En plus, si c'est 8 on rajoute 30 points.
-				else if(main.get(j).getEffet()!=0){
-					point=point+20;
-					if(main.get(j).getNumero()==7) {
-						point=point+30;
+				// verifier si la carte a effet, on lui donne 20 points. En plus, si c'est 8 on
+				// rajoute 30 points.
+				else if (main.get(j).getEffet() != 0) {
+					point = point + 20;
+					if (main.get(j).getNumero() == 7) {
+						point = point + 30;
 					}
-				}
-				else {
-					point=point+main.get(j).getNumero();
+				} else {
+					point = point + main.get(j).getNumero();
 				}
 			}
 			listeJoueurs.get(i).setPoint(point);
 		}
 	}
-	
-	
-	//-------------------Getters et Setters--------------------
-	
-	
+
+	// -------------------Getters et Setters--------------------
+
 	public Initialisation getInitialisation() {
 		return initialisation;
 	}
+
 	public void setInitialisation(Initialisation initialisation) {
 		this.initialisation = initialisation;
 	}
+
 	public Pioche getPioche() {
 		return pioche;
 	}
+
 	public void setPioche(Pioche pioche) {
 		this.pioche = pioche;
 	}
+
 	public Talon getTalon() {
 		return talon;
 	}
+
 	public void setTalon(Talon talon) {
 		this.talon = talon;
 	}
+
 	public int getNbJoueurs() {
 		return nbJoueurs;
 	}
+
 	public void setNbJoueurs(int nbJoueurs) {
 		this.nbJoueurs = nbJoueurs;
 	}
+
 	public ArrayList<Joueur> getListeJoueurs() {
 		return listeJoueurs;
 	}
+
 	public void setListeJoueurs(ArrayList<Joueur> listeJoueurs) {
 		this.listeJoueurs = listeJoueurs;
 	}
+
 	public boolean isGagnant() {
 		return gagnant;
 	}
+
 	public void setGagnant(boolean gagnant) {
 		this.gagnant = gagnant;
 	}
+
 	public Joueur getJoueurEnCours() {
 		return joueurEnCours;
 	}
+
 	public void setJoueurEnCours(Joueur joueurEnCours) {
 		this.joueurEnCours = joueurEnCours;
 	}
+
 	public ControleJeu getControleJeu() {
 		return controleJeu;
 	}
+
 	public void setControleJeu(ControleJeu controleJeu) {
 		this.controleJeu = controleJeu;
 	}
+
 	public int getPosJoueurEnCours() {
 		return posJoueurEnCours;
 	}
+
 	public void setPosJoueurEnCours(int posJoueurEnCours) {
 		this.posJoueurEnCours = posJoueurEnCours;
 	}
+
 	public boolean isContrePossible() {
 		return contrePossible;
 	}
+
 	public void setContrePossible(boolean contrePossible) {
 		this.contrePossible = contrePossible;
 	}
@@ -467,14 +503,15 @@ public class Jeu extends Observable{
 	public void setStrategie(RobotStrategie strategie) {
 		this.strategie = strategie;
 	}
+
 	public void jouer() {
 		this.strategie.jouer(this);
 	}
-	
-	
-	//tous les waits sont mis a 500 pour que les tests d execution aillent plus vite
-	
-	public static void wait3(){
+
+	// tous les waits sont mis a 500 pour que les tests d execution aillent plus
+	// vite
+
+	public static void wait3() {
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -483,7 +520,7 @@ public class Jeu extends Observable{
 		}
 	}
 
-	public static void wait2(){
+	public static void wait2() {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -491,13 +528,31 @@ public class Jeu extends Observable{
 			e.printStackTrace();
 		}
 	}
-	
-	public static void wait1(){
+
+	public static void wait1() {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public boolean getChangeText() {
+		// TODO Auto-generated method stub
+		return changeText;
+	}
+
+	public void setChangeText(boolean b) {
+		// TODO Auto-generated method stub
+
 	}
 }
