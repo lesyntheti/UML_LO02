@@ -10,10 +10,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import modele.Carte;
 import modele.Jeu;
+import javax.swing.JLabel;
+
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JPanel;
 
 public class TableJeuVue implements Observer {
 
@@ -23,6 +27,7 @@ public class TableJeuVue implements Observer {
 	private Carte carteTalon;
 	private int nbJoueursAdv;
 	private int joueurActuel = 0;
+	private JTextArea textArea;
 
 	public static Carte carteSelectionnee;
 
@@ -183,12 +188,28 @@ public class TableJeuVue implements Observer {
 		CarteTalonVue carteTalonVue = new CarteTalonVue(carteTalon);
 		carteTalonVue.setBounds((frame.getWidth() / 2) - 41, (frame.getHeight() / 2) - 58, 82, 116);
 		frame.getContentPane().add(carteTalonVue);
+		
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(52, 52, 200, 16*3);
+		textArea.setLineWrap(true);
+		frame.getContentPane().add(textArea);
+		
+
+		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0, 102, 0));
+		panel.setBounds(47, 47, 210, (16*3)+10);
+		frame.getContentPane().add(panel);
 
 		// en dernier (background)
 		BackgroundPanel background = new BackgroundPanel();
 		background.setBounds(0, 0, 900, 600);
 		frame.getContentPane().add(background);
 		background.setLayout(null);
+		
+		
+		
+		
 
 		frame.repaint();
 		frame.setVisible(true);
@@ -341,11 +362,27 @@ public class TableJeuVue implements Observer {
 		CarteTalonVue carteTalonVue = new CarteTalonVue(carteTalon);
 		carteTalonVue.setBounds((frame.getWidth() / 2) - 41, (frame.getHeight() / 2) - 58, 82, 116);
 		frame.getContentPane().add(carteTalonVue);
+		
+		
+		
+		JTextArea textArea = new JTextArea(jeuEnCours.getText());
+		textArea.setBounds(52, 52, 200, 16*3);
+		textArea.setLineWrap(true);
+		frame.getContentPane().add(textArea);
+		
+		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0,102,0));
+		panel.setBounds(47, 47, 210, (16*3)+10);
+		frame.getContentPane().add(panel);
+		
+		
 
 		// en dernier (background)
 		BackgroundPanel background = new BackgroundPanel();
 		background.setBounds(0, 0, 900, 600);
 		frame.getContentPane().add(background);
+		
+		
 
 		frame.repaint();
 		frame.setVisible(true);
@@ -403,5 +440,4 @@ public class TableJeuVue implements Observer {
 			cartesMoi.add(carteAjoutee);
 		}
 	}
-
 }
