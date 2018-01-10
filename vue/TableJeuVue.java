@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 
 import modele.Carte;
 import modele.Jeu;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 public class TableJeuVue implements Observer {
 
@@ -23,6 +25,7 @@ public class TableJeuVue implements Observer {
 	private Carte carteTalon;
 	private int nbJoueursAdv;
 	private int joueurActuel = 0;
+	private JTextArea textArea;
 
 	public static Carte carteSelectionnee;
 
@@ -56,7 +59,6 @@ public class TableJeuVue implements Observer {
 		this.jeuEnCours = jeuEnCours;
 		System.out.println("on ajoute un observer");
 		this.jeuEnCours.addObserver(this);
-
 	}
 
 	/**
@@ -189,6 +191,10 @@ public class TableJeuVue implements Observer {
 		background.setBounds(0, 0, 900, 600);
 		frame.getContentPane().add(background);
 		background.setLayout(null);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(342, 215, 232, 24);
+		background.add(textArea);
 
 		frame.repaint();
 		frame.setVisible(true);
@@ -369,17 +375,19 @@ public class TableJeuVue implements Observer {
 																// nouvel
 																// affichage de
 																// sa main
-
 			} else { // si un bot a joué une carte et que le talon a change donc
 				// System.out.println("actualisation bot");
 				carteTalon = jeuEnCours.getTalon().getCarteDessus();
 				joueurActuel = jeuEnCours.getPosJoueurEnCours();
 				actualiser(cartesMoi, carteTalon, jeuEnCours);
-
+			}
+			if(jeuEnCours.getChangeText()==true) {
+				textArea.setText(jeuEnCours.getText());
 			}
 			if (jeuEnCours.isGagnant()) {
 				frame.setVisible(false);
 			}
+			//if (jeuEnCours)
 		}
 
 	}
@@ -403,5 +411,4 @@ public class TableJeuVue implements Observer {
 			cartesMoi.add(carteAjoutee);
 		}
 	}
-
 }
